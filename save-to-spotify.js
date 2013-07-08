@@ -10,6 +10,8 @@
       searchForArtist();
     } else {
       window.location = tracks[0].href;
+    } else {
+      showTrackOptions(validateTrackArtist(tracks));
     }
   };
 

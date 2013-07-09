@@ -56,6 +56,32 @@
     return -1;
   };
 
+  var showTrackOptions = function (tracks) {
+    var modalContent = addModal("large"),
+        modalHeader = document.createElement("h2"),
+        trackList = listEl();
+
+    modalHeader.innerHTML = "Matching Tracks on Spotify";
+    modalContent.appendChild(modalHeader);
+
+    tracks.map(function (track) {
+      var trackItemEl = document.createElement("li"),
+          firstArtist = track.artists[0];
+      trackItemEl.innerHTML = "<a href='" + track.href + "'>"
+        + track.name 
+        + "</a> by <a href='" + firstArtist.href + "'>"
+        + firstArtist.name + "</a> from the album "
+        + "<em><a href='" + track.album.href + "'></em>" 
+        + track.album.name + "</a>.";
+      trackList.appendChild(trackItemEl);  
+    });
+
+    modalContent.appendChild(trackList);
+
+    pauseSourceSiteMusic();
+
+  };
+
   var searchForArtist = function () {
     var spotifyArtistSearch = new XMLHttpRequest();
     spotifyArtistSearch.onload = parseArtistSearch;
@@ -73,20 +99,6 @@
     } else {
       showArtistOptions(response.artists);
     }
-  };
-
-  var showNotFoundMessage = function () {
-    var modalContent = addModal("small"),
-        modalHeader = document.createElement("h2"),
-        modalExplanation = document.createElement("h3");
-
-    modalHeader.innerHTML = "Not Found";
-    modalContent.appendChild(modalHeader);
-
-    modalExplanation.innerHTML = "<p>Sorry, I couldn't find the track '" + sourceSiteData.track 
-      + "' or the artist " + sourceSiteData.artist 
-      + " on Spotify.</p><p>Try again with the next song you like.</p>";
-    modalContent.appendChild(modalExplanation); 
   };
 
   var showArtistOptions = function (artists) {
@@ -113,30 +125,18 @@
 
   };
 
-  var showTrackOptions = function (tracks) {
-    var modalContent = addModal("large"),
+  var showNotFoundMessage = function () {
+    var modalContent = addModal("small"),
         modalHeader = document.createElement("h2"),
-        trackList = listEl();
+        modalExplanation = document.createElement("h3");
 
-    modalHeader.innerHTML = "Matching Tracks on Spotify";
+    modalHeader.innerHTML = "Not Found";
     modalContent.appendChild(modalHeader);
 
-    tracks.map(function (track) {
-      var trackItemEl = document.createElement("li"),
-          firstArtist = track.artists[0];
-      trackItemEl.innerHTML = "<a href='" + track.href + "'>"
-        + track.name 
-        + "</a> by <a href='" + firstArtist.href + "'>"
-        + firstArtist.name + "</a> from the album "
-        + "<em><a href='" + track.album.href + "'></em>" 
-        + track.album.name + "</a>.";
-      trackList.appendChild(trackItemEl);  
-    });
-
-    modalContent.appendChild(trackList);
-
-    pauseSourceSiteMusic();
-
+    modalExplanation.innerHTML = "<p>Sorry, I couldn't find the track '" + sourceSiteData.track 
+      + "' or the artist " + sourceSiteData.artist 
+      + " on Spotify.</p><p>Try again with the next song you like.</p>";
+    modalContent.appendChild(modalExplanation); 
   };
 
   var pauseSourceSiteMusic = function () {

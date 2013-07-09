@@ -1,14 +1,16 @@
 ;(function () {
 
   var artist = document.getElementsByClassName("szi-artist")[0].innerHTML,
-      track = document.getElementsByClassName("szi-song")[0].innerHTML;
+      track = document.getElementsByClassName("szi-song")[0].innerHTML,
+      pauseButton = document.getElementsByClassName("szi-pause")[0],
+      htmlEl = document.getElementsByTagName("html")[0];
 
   var parseTrackSearch = function () {
     var response = JSON.parse(this.responseText),
         tracks = validateTrackArtist(response.tracks);
     if (tracks.length === 0) {
       searchForArtist();
-    } else {
+    } else if (tracks.length === 1) {
       window.location = tracks[0].href;
     } else {
       showTrackOptions(validateTrackArtist(tracks));
@@ -90,6 +92,8 @@
 
     modalContent.appendChild(artistList);
 
+    pauseSourceSiteMusic();
+
   };
 
   var showTrackOptions = function (tracks) {
@@ -117,6 +121,20 @@
 
     modalContent.appendChild(trackList);
 
+    pauseSourceSiteMusic();
+
+  };
+
+  var pauseSourceSiteMusic = function () {
+    if (document.getElementsByClassName("szi-player-state-play").length > 0) {
+      pauseButton.click();
+    }
+  };
+
+  var resumeSourceSiteMusic = function () {
+    if (document.getElementsByClassName("szi-player-state-pause").length > 0) {
+      pauseButton.click();
+    }
   };
 
   var listEl = function () {
@@ -126,8 +144,7 @@
   };
 
   var addModal = function (type) {
-    var htmlEl = document.getElementsByTagName("html")[0],
-        firstBodyEl = document.body.firstChild;
+    var firstBodyEl = document.body.firstChild;
 
     var modal = document.createElement("div");
     modal.id = "add-to-spotify-modal";
@@ -190,6 +207,9 @@
   var closeModal = function () {
     document.body.removeChild(document.getElementById("add-to-spotify-overlay"));
     document.body.removeChild(document.getElementById("add-to-spotify-modal"));
+    document.body.style.overflow = "auto";
+    htmlEl.style.overflow = "auto";
+    resumeSourceSiteMusic();
   };
 
   // cross-browser event binder

@@ -235,7 +235,7 @@
     modalContent.appendChild(modalHeader);
 
     modalExplanation.innerHTML = "<p>Sorry, I can't connect to Spotify right now.</p>" 
-      + "<p>Try again with the next song you like.</p>" + event;
+      + "<p>Try again with the next song you like.</p>" + event.target.status;
     modalContent.appendChild(modalExplanation); 
   };
 

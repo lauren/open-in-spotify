@@ -1,34 +1,49 @@
 ;(function () {
 
-  var artist = document.getElementsByClassName("szi-artist")[0].innerHTML,
-      track = document.getElementsByClassName("szi-song")[0].innerHTML,
-      pauseButton = document.getElementsByClassName("szi-pause")[0],
-      htmlEl = document.getElementsByTagName("html")[0];
+  var sourceSiteData = {
+    htmlEl: document.getElementsByTagName("html")[0]
+  };
 
   var parseTrackSearch = function () {
     var response = JSON.parse(this.responseText),
         tracks = validateTrackArtist(response.tracks);
     if (tracks.length === 0) {
       searchForArtist();
-    } else if (tracks.length === 1) {
+    } else if (tracks.lenght === 1) {
       window.location = tracks[0].href;
     } else {
       showTrackOptions(validateTrackArtist(tracks));
     }
   };
 
-  (function () {
+  var searchForTrack = function () {
     var spotifyTrackSearch = new XMLHttpRequest();
     spotifyTrackSearch.onload = parseTrackSearch;
+    spotifyTrackSearch.onerror = showError;
     spotifyTrackSearch.open("get", 
-      "http://ws.spotify.com/search/1/track.json?q=" + track.replace(/\s/g, "%20"));
+      "http://ws.spotify.com/search/1/track.json?q=" + sourceSiteData.track.replace(/\s/g, "%20"));
     spotifyTrackSearch.send();
+  };
+
+  (function () {
+    switch (window.location.hostname) {
+      case "songza.com":
+        sourceSiteData.artist = document.getElementsByClassName("szi-artist")[0].innerHTML;
+        sourceSiteData.track = document.getElementsByClassName("szi-song")[0].innerHTML;
+        sourceSiteData.pauseButton = document.getElementsByClassName("szi-pause")[0];
+        sourceSiteData.currentlyPlaying = document.getElementsByClassName("szi-player-state-play").length > 0;
+        searchForTrack();
+        break;
+      default:
+        showUnsupportedSiteMessage();
+        break;
+    }
   })();
 
   // TO DO: dedupe exact matches
   var validateTrackArtist = function (tracks) {
     return tracksWithArtist = tracks.filter(function (thisTrack) {
-      return (indexOfArtistName(thisTrack.artists, artist) > -1);
+      return (indexOfArtistName(thisTrack.artists, sourceSiteData.artist) > -1);
     });
   };
 
@@ -44,8 +59,9 @@
   var searchForArtist = function () {
     var spotifyArtistSearch = new XMLHttpRequest();
     spotifyArtistSearch.onload = parseArtistSearch;
+    spotifyArtistSearch.onerror = showError;
     spotifyArtistSearch.open("get", 
-      "http://ws.spotify.com/search/1/artist.json?q=" + artist.replace(/\s/g, "%20"));
+      "http://ws.spotify.com/search/1/artist.json?q=" + sourceSiteData.artist.replace(/\s/g, "%20"));
     spotifyArtistSearch.send();
   };
 
@@ -67,8 +83,9 @@
     modalHeader.innerHTML = "Not Found";
     modalContent.appendChild(modalHeader);
 
-    modalExplanation.innerHTML = "<p>Sorry, I couldn't find the track '" + track 
-      + "' or the artist " + artist + " on Spotify.</p><p>Try again with the next song you like.</p>";
+    modalExplanation.innerHTML = "<p>Sorry, I couldn't find the track '" + sourceSiteData.track 
+      + "' or the artist " + sourceSiteData.artist 
+      + " on Spotify.</p><p>Try again with the next song you like.</p>";
     modalContent.appendChild(modalExplanation); 
   };
 
@@ -104,9 +121,6 @@
     modalHeader.innerHTML = "Matching Tracks on Spotify";
     modalContent.appendChild(modalHeader);
 
-    console.log(tracks);
-    console.log(trackList);
-
     tracks.map(function (track) {
       var trackItemEl = document.createElement("li"),
           firstArtist = track.artists[0];
@@ -126,14 +140,14 @@
   };
 
   var pauseSourceSiteMusic = function () {
-    if (document.getElementsByClassName("szi-player-state-play").length > 0) {
-      pauseButton.click();
+    if (sourceSiteData.currentlyPlaying) {
+      sourceSiteData.pauseButton.click();
     }
   };
 
   var resumeSourceSiteMusic = function () {
-    if (document.getElementsByClassName("szi-player-state-pause").length > 0) {
-      pauseButton.click();
+    if (sourceSiteData.currentlyPlaying) {
+      sourceSiteData.pauseButton.click();
     }
   };
 
@@ -180,7 +194,7 @@
 
     var modalContent = document.createElement("div");
     modalContent.id = "add-to-spotify-modal-content";
-    modalContent.style.padding = "10px 15px";
+    modalContent.style.padding = "15px";
     modal.appendChild(modalContent);
 
     document.body.insertBefore(modal, firstBodyEl);
@@ -197,7 +211,7 @@
     overlay.style.marginTop = "-15px";
     overlay.style.position = "absolute";
     document.body.style.overflow = "hidden";
-    htmlEl.style.overflow = "hidden";
+    sourceSiteData.htmlEl.style.overflow = "hidden";
   
     document.body.insertBefore(overlay, modal);
     
@@ -208,8 +222,21 @@
     document.body.removeChild(document.getElementById("add-to-spotify-overlay"));
     document.body.removeChild(document.getElementById("add-to-spotify-modal"));
     document.body.style.overflow = "auto";
-    htmlEl.style.overflow = "auto";
+    sourceSiteData.htmlEl.style.overflow = "auto";
     resumeSourceSiteMusic();
+  };
+
+  var showError = function (event) {
+    var modalContent = addModal("small"),
+        modalHeader = document.createElement("h2"),
+        modalExplanation = document.createElement("h3");
+
+    modalHeader.innerHTML = "Can't connect to Spotify";
+    modalContent.appendChild(modalHeader);
+
+    modalExplanation.innerHTML = "<p>Sorry, I can't connect to Spotify right now.</p>" 
+      + "<p>Try again with the next song you like.</p>" + event;
+    modalContent.appendChild(modalExplanation); 
   };
 
   // cross-browser event binder

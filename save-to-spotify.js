@@ -6,13 +6,14 @@
 
   var parseTrackSearch = function () {
     var response = JSON.parse(this.responseText),
-        tracks = validateTrackArtist(response.tracks);
+        validTracks = validateTrackArtist(response.tracks),
+        tracks = dedupeTracks(validTracks);
     if (tracks.length === 0) {
       searchForArtist();
-    } else if (tracks.lenght === 1) {
+    } else if (tracks.length === 1) {
       window.location = tracks[0].href;
     } else {
-      showTrackOptions(validateTrackArtist(tracks));
+      showTrackOptions(tracks);
     }
   };
 
@@ -134,9 +135,38 @@
 
   // TO DO: dedupe exact matches
   var validateTrackArtist = function (tracks) {
-    return tracksWithArtist = tracks.filter(function (thisTrack) {
+    return tracks.filter(function (thisTrack) {
       return (indexOfArtistName(thisTrack.artists, sourceSiteData.artist) > -1);
     });
+  };
+
+  var dedupeTracks = function (tracks) {
+    var tracks = sanitizeTrackAndAlbumNames(tracks.reverse());
+    var dedupedTracks = tracks.filter(function (thisTrack, index) {
+      var otherTracks = tracks.slice(index+1, tracks.length);
+      return !findTrackInArray(thisTrack, otherTracks);
+    });
+    return dedupedTracks.reverse();
+  };
+
+  var sanitizeTrackAndAlbumNames = function (tracks) {
+    return tracks.map(function (thisTrack) {
+      thisTrack.name = thisTrack.name.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+      thisTrack.name = thisTrack.name.replace(/\s{2,}/g," ");
+      thisTrack.album.name = thisTrack.album.name.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+      thisTrack.album.name = thisTrack.album.name.replace(/\s{2,}/g," ");
+      return thisTrack;
+    });
+  };
+
+  var findTrackInArray = function (track, otherTracks) {
+    for (var i = 0; i < otherTracks.length; i++) {
+      if ((track.name === otherTracks[i].name) 
+        && (track.album.name === otherTracks[i].album.name)) {
+          return true;
+      }
+    }
+    return false;
   };
 
   var indexOfArtistName = function (array, artistName) {
@@ -278,7 +308,7 @@
     Array.prototype.filter = function (thisFunction) {
       var result = [];
       for (var i = 0; i < this.length; i++) {
-        if (thisFunction(this[i])) {
+        if (thisFunction(this[i], i, this)) {
           result.push(this);
         }
       }

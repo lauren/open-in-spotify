@@ -1,4 +1,4 @@
-;(function () {
+;(function (exports) {
 
   var render = {
     showTrackOptions: function (tracks) {
@@ -192,4 +192,4 @@
 
   exports.render = render;
 
-})();
+})(typeof exports === "undefined" ? this : modalExplanation);

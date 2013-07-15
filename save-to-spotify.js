@@ -1,6 +1,6 @@
 ;(function (exports) {
 
-	 var sourceSiteData = {
+	var sourceSiteData = {
     htmlEl: document.getElementsByTagName("html")[0]
   };
 
@@ -12,11 +12,13 @@
 	    sourceSiteData.currentlyPlaying = document.getElementsByClassName("szi-player-state-play").length > 0;
 	    spotifyQuerier.searchForTrack(function () {
 	      router.trackSearch(this.responseText);
-	    }, showError, sourceSiteData.track);
+	    }, render.showError, sourceSiteData.track);
 	    break;
 	  default:
 	    render.showUnsupportedSiteMessage();
 	    break;
 	}
+
+	exports.sourceSiteData = sourceSiteData;
 
 })(typeof exports === "undefined" ? this : exports);

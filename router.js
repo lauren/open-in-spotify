@@ -5,7 +5,7 @@
         validTracks = validateTrackArtist(response.tracks),
         tracks = dedupeTracks(validTracks);
     if (tracks.length === 0) {
-      spotifyQuerier.searchForArtist(parseArtistSearch, showError, sourceSiteData.artist);
+      spotifyQuerier.searchForArtist(artistSearch, render.showError, sourceSiteData.artist);
     } else if (tracks.length === 1) {
       render.openInSpotify(tracks[0].href);
     } else {
@@ -14,7 +14,7 @@
   };
 
   var artistSearch = function (spotifyJson) {
-    var response = JSON.parse(spotifyJson),
+    var response = JSON.parse(this.responseText),
         numResults = response.info.num_results;
     if (numResults === 0) {
       render.showNotFoundMessage();
@@ -23,7 +23,10 @@
     }
   };
 
-  // TO DO: dedupe exact matches
+  var openInSpotify = function (spotifyHref) {
+    window.location = spotifyHref;
+  };
+
   var validateTrackArtist = function (tracks) {
     return tracks.filter(function (thisTrack) {
       return (indexOfArtistName(thisTrack.artists, sourceSiteData.artist) > -1);

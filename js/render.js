@@ -4,7 +4,7 @@
     showTrackOptions: function (tracks) {
       var modalContent = addModal("large"),
           modalHeader = document.createElement("h2"),
-          trackList = listEl();
+          trackList = document.createElement("ul");
 
       modalHeader.innerHTML = "Matching Tracks on Spotify";
       modalContent.appendChild(modalHeader);
@@ -23,7 +23,7 @@
 
       modalContent.appendChild(trackList);
 
-      pauseSourceSiteMusic();
+      this.pauseSourceSiteMusic();
 
     },
 
@@ -31,7 +31,7 @@
       var modalContent = addModal("large"),
           modalHeader = document.createElement("h2"),
           modalCaveat = document.createElement("h3"),
-          artistList = listEl();
+          artistList = document.createElement("ul");
 
       modalCaveat.innerHTML = "<p>Sorry! I couldn't find the exact track you're listening to on Spotify.</p>";
       modalContent.appendChild(modalCaveat);
@@ -47,7 +47,7 @@
 
       modalContent.appendChild(artistList);
 
-      pauseSourceSiteMusic();
+      this.pauseSourceSiteMusic();
 
     },
 
@@ -90,62 +90,48 @@
       modalExplanation.innerHTML = "<p>Sorry, I can't connect to Spotify right now.</p>" 
         + "<p>Try again with the next song you like.</p>" + event.target.status;
       modalContent.appendChild(modalExplanation); 
+    },
+
+    pauseSourceSiteMusic: function () {
+      if (sourceSiteData.currentlyPlaying) {
+        sourceSiteData.pauseButton.click();
+      }
     }
 
-  };
-
-  var listEl = function () {
-    var listContainer = document.createElement("ul");
-    listContainer.style.fontSize = "20px";
-    return listContainer;
   };
 
   var closeModal = function () {
     document.body.removeChild(document.getElementById("add-to-spotify-overlay"));
     document.body.removeChild(document.getElementById("add-to-spotify-modal"));
+    document.head.removeChild(document.getElementById("add-to-spotify-stylesheet"));
     document.body.style.overflow = "auto";
     sourceSiteData.htmlEl.style.overflow = "auto";
     resumeSourceSiteMusic();
   };
 
   var addModal = function (type) {
+    var styleSheetLink = document.createElement("link");
+    styleSheetLink.type = "text/css";
+    styleSheetLink.rel = "stylesheet";
+    styleSheetLink.id = "add-to-spotify-stylesheet";
+    styleSheetLink.href = "http://d39ywk3d3wha95.cloudfront.net/save-to-spotify.css";
+    sourceSiteData.headEl.appendChild(styleSheetLink);
+
     var firstBodyEl = document.body.firstChild;
 
     var modal = document.createElement("div");
     modal.id = "add-to-spotify-modal";
-    modal.style.margin = "auto auto";
-    modal.style.background = "#fff";
-    modal.style.zIndex = 1450;
-    modal.style.position = "fixed";
-    modal.style.left = "0";
-    modal.style.right = "0";
-    modal.style.top = "0";
-    modal.style.bottom = "0";
-    modal.style.overflow = "auto";
-    modal.style.width = type === "small" ? "400px" : "70%";
-    modal.style.height = type === "small" ? "200px" : "90%";
-    modal.style.borderRadius = "5px";
+    modal.className = "add-to-spotify-modal " + type;
 
     var closeBox = document.createElement("div");
     closeBox.id = "close-spotify-modal";
-    closeBox.style.position = "absolute";
-    closeBox.style.height = "auto";
-    closeBox.style.width = "auto";
-    closeBox.style.right = "0";
-    closeBox.style.top = "0";
-    closeBox.style.fontSize = "40px";
-    closeBox.style.lineHeight = "25px";
-    closeBox.style.padding = "10px";
-    closeBox.style.borderLeft = "1px solid #666";
-    closeBox.style.borderBottom = "1px solid #666";
-    closeBox.style.borderRight = "1px solid #666";
-    closeBox.style.cursor = "pointer";
+    closeBox.className = "close-modal";
     closeBox.innerHTML = "&times;";
     modal.appendChild(closeBox);
 
     var modalContent = document.createElement("div");
     modalContent.id = "add-to-spotify-modal-content";
-    modalContent.style.padding = "15px";
+    modalContent.className = "modal-content";
     modal.appendChild(modalContent);
 
     document.body.insertBefore(modal, firstBodyEl);
@@ -154,13 +140,8 @@
 
     var overlay = document.createElement("div");
     overlay.id = "add-to-spotify-overlay";
-    overlay.style.background = "#000";
-    overlay.style.opacity = 0.7;
-    overlay.style.zIndex = 1400;
+    overlay.className = "add-to-spotify-overlay";
     overlay.style.height = parseInt(window.screen.height + 20, 10) + "px";
-    overlay.style.width = "100%";
-    overlay.style.marginTop = "-15px";
-    overlay.style.position = "absolute";
     document.body.style.overflow = "hidden";
     sourceSiteData.htmlEl.style.overflow = "hidden";
   
@@ -175,12 +156,6 @@
       element.addEventListener(event, thisFunction);
     } else {
       element.attachEvent(event, thisFunction);
-    }
-  };
-
-  var pauseSourceSiteMusic = function () {
-    if (sourceSiteData.currentlyPlaying) {
-      sourceSiteData.pauseButton.click();
     }
   };
 

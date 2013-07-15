@@ -7,7 +7,7 @@
     if (tracks.length === 0) {
       spotifyQuerier.searchForArtist(artistSearch, render.showError, sourceSiteData.artist);
     } else if (tracks.length === 1) {
-      render.openInSpotify(tracks[0].href);
+      openInSpotify(tracks[0].href);
     } else {
       render.showTrackOptions(tracks);
     }
@@ -24,6 +24,7 @@
   };
 
   var openInSpotify = function (spotifyHref) {
+    render.pauseSourceSiteMusic();
     window.location = spotifyHref;
   };
 

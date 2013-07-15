@@ -1,8 +1,9 @@
 ;(function (exports) {
 
 	var sourceSiteData = {
-    htmlEl: document.getElementsByTagName("html")[0]
-  };
+    	htmlEl: document.getElementsByTagName("html")[0],
+    	headEl: document.getElementsByTagName("head")[0]
+  	};
 
 	switch (window.location.hostname) {
 	  case "songza.com":

@@ -1,5 +1,5 @@
 var assert = require('assert');
-var spotifyQuerier = require('../spotify-querier').spotifyQuerier;
+var spotifyQuerier = require('../js/spotify-querier').spotifyQuerier;
 
 describe('spotifyQuerier', function () {
 

@@ -3,7 +3,7 @@ var assert = require('assert');
 describe('Array', function () {
 	beforeEach(function () {
 		Array.prototype.map = undefined;
-		var shims = require('../shims');
+		var shims = require('../js/shims');
 	});
 
 	describe('#map()', function () {

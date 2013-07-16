@@ -20,9 +20,7 @@
 
   var displayResults = function (track, artist) {
     try {
-      spotifyQuerier.getTracks(track, artist, function (tracks) {
-        displayTracksOrArtists(tracks, artist);
-      });
+      spotifyQuerier.getTracks(track, artist, function (tracks) { displayTracksOrArtists(tracks, artist); });
     } catch (e) {
       render.showError(e);
     }
@@ -35,7 +33,7 @@
       render.openInSpotify(tracks[0]);
     } else {
       render.showTrackOptions(tracks);
-    }
+    } 
   };
 
   var displayArtists = function (artists) {

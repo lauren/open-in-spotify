@@ -1,13 +1,13 @@
 ;(function (exports) {
-  
+
   var searchForArtist = function (artistName, successCallback) {
-    var spotifyUrl = "http://ws.spotify.com/search/1/artist.json?q=" 
+    var spotifyUrl = "http://ws.spotify.com/search/1/artist.json?q="
       + artistName.replace(/\s/g, "%20");
     querySpotify(spotifyUrl, successCallback);
   };
-  
+
   var searchForTrack = function (trackName, successCallback) {
-    var spotifyUrl = "http://ws.spotify.com/search/1/track.json?q=" 
+    var spotifyUrl = "http://ws.spotify.com/search/1/track.json?q="
       + trackName.replace(/\s/g, "%20");
     querySpotify(spotifyUrl, successCallback);
   };
@@ -76,7 +76,7 @@
             validTracks = validateTrackArtist(response.tracks, artist),
             tracks = dedupeTracks(validTracks);
         callback(tracks);
-      }); 
+      });
     },
     getArtists: function (artist, callback) {
       searchForArtist(artist, function () {

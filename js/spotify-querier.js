@@ -66,7 +66,7 @@
     ajaxRequest: function (url, successCallback, errorCallback) {
       var xhr = new XMLHttpRequest();
       xhr.onload = successCallback;
-        xhr.onerror = errorCallback;
+      xhr.onerror = errorCallback;
       xhr.open("get", url);
       xhr.send();
     },

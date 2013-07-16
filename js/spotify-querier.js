@@ -69,6 +69,11 @@
       xhr.onerror = errorCallback;
       xhr.open("get", url);
       xhr.send();
+      if (xhr.status === 200) {
+        return xhr;
+      } else {
+        throw new Error(xhr.statusText);
+      }
     },
     getTracks: function (track, artist, callback) {
       searchForTrack(track, function () {

@@ -7,7 +7,7 @@
         result.push(thisFunction(this[i]));
       }
       return result;
-    }
+    };
   }
 
   if (Array.prototype.filter === undefined) {
@@ -19,7 +19,7 @@
         }
       }
       return result;
-    }
+    };
   }
 
 })();

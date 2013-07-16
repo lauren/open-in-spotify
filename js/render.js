@@ -96,6 +96,11 @@
       if (sourceSiteData.currentlyPlaying) {
         sourceSiteData.pauseButton.click();
       }
+    },
+
+    openInSpotify: function (track) {
+      this.pauseSourceSiteMusic();
+      window.location = track.href;
     }
 
   };

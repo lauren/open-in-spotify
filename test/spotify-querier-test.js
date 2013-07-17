@@ -36,21 +36,21 @@ describe('spotifyQuerier', function () {
     });
   });
 
+  var stubAjaxRequst = function (json) {
+    var savedAjaxRequest = spotifyQuerier.ajaxRequest;
+
+    spotifyQuerier.ajaxRequest = function (_, callback) {
+      var responseText = JSON.stringify(json);
+      callback.apply({responseText: responseText});
+    };
+    return savedAjaxRequest;
+  };
+
+  var unstubAjaxRequest = function (originalAjaxRequest) {
+    spotifyQuerier.ajaxRequest = originalAjaxRequest;
+  };
+
   describe('#getTracks()', function () {
-
-    var stubAjaxRequst = function (json) {
-      var savedAjaxRequest = spotifyQuerier.ajaxRequest;
-
-      spotifyQuerier.ajaxRequest = function (_, callback) {
-        var responseText = JSON.stringify(json);
-        callback.apply({responseText: responseText});
-      };
-      return savedAjaxRequest;
-    };
-
-    var unstubAjaxRequest = function (originalAjaxRequest) {
-      spotifyQuerier.ajaxRequest = originalAjaxRequest;
-    };
 
     it('should invoke callback with only the tracks that match the provided artist name', function (done) {
       var originalAjaxRequest = stubAjaxRequst({
@@ -112,6 +112,41 @@ describe('spotifyQuerier', function () {
         assert(tracks[1].album.name === "Fanmail");
         assert(tracks[2].name === "No Scrubs");
         assert(tracks[2].album.name === "Fanmail The Hits You Didn't Hear");
+        unstubAjaxRequest(originalAjaxRequest);
+        done();
+      });
+    });
+
+  });
+
+  describe('#getArtists()', function () {
+
+    it('should invoke the callback with the artists array from the responseText', function (done) {
+      var sampleArtistsResponse = {
+        "info": {
+          "num_results": 21,
+          "limit": 100,
+          "offset": 0,
+          "query": "tlc",
+          "type": "artist",
+          "page": 1
+        },
+        "artists": [
+          {
+            "href": "spotify:artist:0TImkz4nPqjegtVSMZnMRq",
+            "name": "TLC",
+            "popularity": "0.62096"
+          },
+          {
+            "href": "spotify:artist:1W5yUflierT5K2peFdbwEC",
+            "name": "Goodie MoB featuring TLC",
+            "popularity": "0.00419"
+          }
+        ]
+      };
+      var originalAjaxRequest = stubAjaxRequst(sampleArtistsResponse);
+      spotifyQuerier.getArtists("TLC", function (artists) {
+        assert.deepEqual(artists, sampleArtistsResponse.artists);
         unstubAjaxRequest(originalAjaxRequest);
         done();
       });

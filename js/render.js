@@ -1,8 +1,8 @@
 ;(function (exports) {
 
   var render = {
-    showTrackOptions: function (tracks) {
-      var modalContent = addModal("large"),
+    showTrackOptions: function (tracks, currentlyPlaying, pauseButton) {
+      var modalContent = addModal("large", currentlyPlaying, pauseButton),
           modalHeader = document.createElement("h2"),
           trackList = document.createElement("ul");
 
@@ -23,7 +23,7 @@
 
       modalContent.appendChild(trackList);
 
-      pauseSourceSiteMusic();
+      toggleSourceSiteMusic(currentlyPlaying, pauseButton);
 
     },
 
@@ -47,11 +47,9 @@
 
       modalContent.appendChild(artistList);
 
-      pauseSourceSiteMusic();
-
     },
 
-    showNotFoundMessage: function () {
+    showNotFoundMessage: function (track, artist) {
       var modalContent = addModal("small"),
           modalHeader = document.createElement("h2"),
           modalExplanation = document.createElement("h3");
@@ -59,14 +57,14 @@
       modalHeader.innerHTML = "Not Found";
       modalContent.appendChild(modalHeader);
 
-      modalExplanation.innerHTML = "<p>Sorry, I couldn't find the track '" + sourceSiteData.track
-        + "' or the artist " + sourceSiteData.artist
+      modalExplanation.innerHTML = "<p>Sorry, I couldn't find the track '" + track
+        + "' or the artist " + artist
         + " on Spotify.</p><p>Try again with the next song you like.</p>";
       modalContent.appendChild(modalExplanation);
     },
 
-    showUnsupportedSiteMessage: function () {
-      var modalContent = addModal("small"),
+    showUnsupportedSiteMessage: function (currentlyPlaying, pauseButton) {
+      var modalContent = addModal("small", currentlyPlaying, pauseButton),
           modalHeader = document.createElement("h2"),
           modalExplanation = document.createElement("h3");
 
@@ -79,8 +77,8 @@
       modalContent.appendChild(modalExplanation);
     },
 
-    showError: function (event) {
-      var modalContent = addModal("small"),
+    showError: function (event, currentlyPlaying, pauseButton) {
+      var modalContent = addModal("small", currentlyPlaying, pauseButton),
           modalHeader = document.createElement("h2"),
           modalExplanation = document.createElement("h3");
 
@@ -92,35 +90,29 @@
       modalContent.appendChild(modalExplanation);
     },
 
-    openInSpotify: function (track) {
-      pauseSourceSiteMusic();
+    openInSpotify: function (track, currentlyPlaying, pauseButton) {
+      toggleSourceSiteMusic(currentlyPlaying,pauseButton);
       window.location = track.href;
     }
 
   };
 
-  var pauseSourceSiteMusic = function () {
-    if (sourceSiteData.currentlyPlaying) {
-      sourceSiteData.pauseButton.click();
-    }
-  };
-
-  var closeModal = function () {
+  var closeModal = function (currentlyPlaying, pauseButton) {
     document.body.removeChild(document.getElementById("add-to-spotify-overlay"));
     document.body.removeChild(document.getElementById("add-to-spotify-modal"));
     document.head.removeChild(document.getElementById("add-to-spotify-stylesheet"));
     document.body.style.overflow = "auto";
-    sourceSiteData.htmlEl.style.overflow = "auto";
-    resumeSourceSiteMusic();
+    document.getElementsByTagName("html")[0].style.overflow = "auto";
+    toggleSourceSiteMusic(currentlyPlaying, pauseButton);
   };
 
-  var addModal = function (type) {
+  var addModal = function (type, currentlyPlaying, pauseButton) {
     var styleSheetLink = document.createElement("link");
     styleSheetLink.type = "text/css";
     styleSheetLink.rel = "stylesheet";
     styleSheetLink.id = "add-to-spotify-stylesheet";
     styleSheetLink.href = "http://d39ywk3d3wha95.cloudfront.net/save-to-spotify.css";
-    sourceSiteData.headEl.appendChild(styleSheetLink);
+    document.head.appendChild(styleSheetLink);
 
     var firstBodyEl = document.body.firstChild;
 
@@ -141,14 +133,16 @@
 
     document.body.insertBefore(modal, firstBodyEl);
 
-    bindEvent(closeBox, "click", closeModal);
+    bindEvent(closeBox, "click", function () {
+      closeModal(currentlyPlaying, pauseButton)
+    });
 
     var overlay = document.createElement("div");
     overlay.id = "add-to-spotify-overlay";
     overlay.className = "add-to-spotify-overlay";
     overlay.style.height = parseInt(window.screen.height + 20, 10) + "px";
     document.body.style.overflow = "hidden";
-    sourceSiteData.htmlEl.style.overflow = "hidden";
+    document.getElementsByTagName("html")[0].style.overflow = "hidden";
 
     document.body.insertBefore(overlay, modal);
 
@@ -164,9 +158,9 @@
     }
   };
 
-  var resumeSourceSiteMusic = function () {
-    if (sourceSiteData.currentlyPlaying) {
-      sourceSiteData.pauseButton.click();
+  var toggleSourceSiteMusic = function (currentlyPlaying, pauseButton) {
+    if (currentlyPlaying) {
+      pauseButton.click();
     }
   };
 

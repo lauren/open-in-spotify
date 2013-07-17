@@ -1,31 +1,36 @@
 ;(function (exports) {
 
-  var sourceSiteData = {
-      htmlEl: document.getElementsByTagName("html")[0],
-      headEl: document.getElementsByTagName("head")[0]
-    };
+  var SaveToSpotify = function (siteInfo) {
+    this.siteInfo = siteInfo;
+  };
 
-  var displayResults = function (track, artist) {
+  SaveToSpotify.prototype.displayResults = function () {
+    var self = this;
     try {
-      spotifyQuerier.getTracks(track, artist, function (tracks) { displayTracksOrArtists(tracks, artist); });
+      spotifyQuerier.getTracks(this.siteInfo.track, this.siteInfo.artist, function (tracks) {
+        self.displayTracksOrArtists.call(self,tracks);
+      });
     } catch (e) {
-      render.showError(e);
+      render.showError(e, self.siteInfo.currentlyPlaying, self.siteInfo.pauseButton);
     }
   };
 
-  var displayTracksOrArtists = function (tracks, artist) {
+  SaveToSpotify.prototype.displayTracksOrArtists = function (tracks) {
+    var self = this;
     if (tracks.length === 0) {
-      spotifyQuerier.getArtists(artist, displayArtists);
+      spotifyQuerier.getArtists(this.siteInfo.artist, function (artists) {
+        self.displayArtists.call(self, artists);
+      });
     } else if (tracks.length === 1) {
-      render.openInSpotify(tracks[0]);
+      render.openInSpotify(tracks[0], this.siteInfo.currentlyPlaying, this.siteInfo.pauseButton);
     } else {
-      render.showTrackOptions(tracks);
-    } 
+      render.showTrackOptions(tracks, this.siteInfo.currentlyPlaying, this.siteInfo.pauseButton);
+    }
   };
 
-  var displayArtists = function (artists) {
+  SaveToSpotify.prototype.displayArtists = function (artists) {
     if (artists.length === 0) {
-      render.showNotFoundMessage();
+      render.showNotFoundMessage(this.siteInfo.track, this.siteInfo.artist);
     } else {
       render.showArtistOptions(artists);
     }
@@ -33,17 +38,12 @@
 
   switch (window.location.hostname) {
     case "songza.com":
-      var artist = document.getElementsByClassName("szi-artist")[0].innerHTML,
-          track = document.getElementsByClassName("szi-song")[0].innerHTML;
-      sourceSiteData.pauseButton = document.getElementsByClassName("szi-pause")[0];
-      sourceSiteData.currentlyPlaying = document.getElementsByClassName("szi-player-state-play").length > 0;
-      displayResults(track, artist);
+      var siteInfo = new selectors.Songza();
+      new SaveToSpotify(siteInfo).displayResults();
       break;
     default:
       render.showUnsupportedSiteMessage();
       break;
   }
-
-  exports.sourceSiteData = sourceSiteData;
 
 })(typeof exports === "undefined" ? this : exports);

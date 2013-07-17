@@ -1,10 +1,5 @@
 ;(function (exports) {
 
-  var pauseButtonGetter = function () {
-    sourceSiteData.pauseButton = document.getElementsByClassName("szi-pause")[0];
-
-  }
-
   var render = {
     showTrackOptions: function (tracks) {
       var modalContent = addModal("large"),
@@ -28,7 +23,7 @@
 
       modalContent.appendChild(trackList);
 
-      this.pauseSourceSiteMusic();
+      pauseSourceSiteMusic();
 
     },
 
@@ -52,7 +47,7 @@
 
       modalContent.appendChild(artistList);
 
-      this.pauseSourceSiteMusic();
+      pauseSourceSiteMusic();
 
     },
 
@@ -97,17 +92,17 @@
       modalContent.appendChild(modalExplanation);
     },
 
-    pauseSourceSiteMusic: function () {
-      if (sourceSiteData.currentlyPlaying) {
-        sourceSiteData.pauseButton.click();
-      }
-    },
-
     openInSpotify: function (track) {
-      this.pauseSourceSiteMusic();
+      pauseSourceSiteMusic();
       window.location = track.href;
     }
 
+  };
+
+  var pauseSourceSiteMusic: function () {
+    if (sourceSiteData.currentlyPlaying) {
+      sourceSiteData.pauseButton.click();
+    }
   };
 
   var closeModal = function () {

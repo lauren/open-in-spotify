@@ -10,8 +10,11 @@
       thisTrack.name = thisTrack.name.replace(/\s{2,}/g," ");
       thisTrack.album.name = thisTrack.album.name.replace(/[\.,-\/#!\$%\^&\*;:{}=\-_`~\(\)]/g,"");
       thisTrack.album.name = thisTrack.album.name.replace(/\s{2,}/g," ");
-      thisTrack.artists[0].name = thisTrack.artists[0].name.replace(/[\.,-\/#!\$%\^&\*;:{}=\-_`~\(\)]/g,"");
-      thisTrack.artists[0].name = thisTrack.artists[0].name.replace(/\s{2,}/g," ");
+      thisTrack.artists = thisTrack.artists.map(function (artist) {
+        artist.name = artist.name.replace(/[\.,-\/#!\$%\^&\*;:{}=\-_`~\(\)]/g,"");
+        artist.name = artist.name.replace(/\s{2,}/g," ");
+        return artist;
+      });
       return thisTrack;
     });
     return newTracks;

@@ -1,4 +1,4 @@
-;(function () {
+;(function (exports) {
 
   var customMap = function (thisFunction) {
     var result = [];
@@ -31,4 +31,4 @@
     customMap: customMap
   }
 
-})();
+})(typeof exports === "undefined" ? this : exports);

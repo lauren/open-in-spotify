@@ -99,7 +99,7 @@
 
   };
 
-  var pauseSourceSiteMusic: function () {
+  var pauseSourceSiteMusic = function () {
     if (sourceSiteData.currentlyPlaying) {
       sourceSiteData.pauseButton.click();
     }

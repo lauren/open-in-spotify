@@ -5,7 +5,11 @@ describe('shims', function () {
 
   describe('#customMap()', function () {
     it('should return an array that is the result of executing the provided function on the current array', function () {
-      [1,2,3].map(function (num) { return num * 2; });
+      assert.deepEqual([2,4,6],[1,2,3].map(function (num) { return num * 2; }));
+    });
+
+    it('should return an empty aray when invoked on an empty array', function () {
+      assert.deepEqual([],[].map(function (num) { return num * 2; }));
     });
   });
 

@@ -87,6 +87,37 @@ describe('spotifyQuerier', function () {
       });
     });
 
+    it('should invoke the callback with tracks deduped on album name and track name', function (done) {
+      var originalAjaxRequest = stubAjaxRequst({
+        "tracks": [
+          { "name": "No Scrubs",
+            "album": { "name": "Fanmail" },
+            "artists": [ { "name": "TLC" } ] },
+          { "name": "No Scrubs: Remix",
+            "album": { "name": "Fanmail" },
+            "artists": [ { "name": "TLC" } ] },
+          { "name": "No Scrubs: Remix",
+            "album": { "name": "Fanmail" },
+            "artists": [ { "name": "TLC" } ] },
+          { "name": "No Scrubs",
+            "album": { "name": "Fanmail: The Hits You Didn't Hear" },
+            "artists": [ { "name": "TLC" } ] }
+        ]
+      });
+      spotifyQuerier.getTracks("whatevs", "TLC", function (tracks) {
+        console.log(JSON.stringify(tracks));
+        assert(tracks.length === 3);
+        assert(tracks[0].name === "No Scrubs");
+        assert(tracks[0].album.name === "Fanmail");
+        assert(tracks[1].name === "No Scrubs Remix");
+        assert(tracks[1].album.name === "Fanmail");
+        assert(tracks[2].name === "No Scrubs");
+        assert(tracks[2].album.name === "Fanmail The Hits You Didn't Hear");
+        unstubAjaxRequest(originalAjaxRequest);
+        done();
+      });
+    });
+
   });
 
 });

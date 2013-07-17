@@ -4,39 +4,25 @@
     throw "Can't connect to Spotify.";
   };
 
+  var sanitizeTrackAndAlbumNames = function (tracks) {
+    var newTracks = tracks.map(function (thisTrack) {
+      thisTrack.name = thisTrack.name.replace(/[\.,-\/#!\$%\^&\*;:{}=\-_`~\(\)]/g,"");
+      thisTrack.name = thisTrack.name.replace(/\s{2,}/g," ");
+      thisTrack.album.name = thisTrack.album.name.replace(/[\.,-\/#!\$%\^&\*;:{}=\-_`~\(\)]/g,"");
+      thisTrack.album.name = thisTrack.album.name.replace(/\s{2,}/g," ");
+      thisTrack.artists[0].name = thisTrack.artists[0].name.replace(/[\.,-\/#!\$%\^&\*;:{}=\-_`~\(\)]/g,"");
+      thisTrack.artists[0].name = thisTrack.artists[0].name.replace(/\s{2,}/g," ");
+      return thisTrack;
+    });
+    return newTracks;
+  };
+
   var validateTrackArtist = function (tracks, artist) {
+    artist = artist.replace(/[\.,-\/#!\$%\^&\*;:{}=\-_`~\(\)]/g,"");
+    artist = artist.replace(/\s{2,}/g," ");
     return tracks.filter(function (thisTrack) {
       return (indexOfArtistName(thisTrack.artists, artist) > -1);
     });
-  };
-
-  var dedupeTracks = function (tracks) {
-    tracks = sanitizeTrackAndAlbumNames(tracks.reverse());
-    var dedupedTracks = tracks.filter(function (thisTrack, index) {
-      var otherTracks = tracks.slice(index+1, tracks.length);
-      return !findTrackInArray(thisTrack, otherTracks);
-    });
-    return dedupedTracks.reverse();
-  };
-
-  var sanitizeTrackAndAlbumNames = function (tracks) {
-    return tracks.map(function (thisTrack) {
-      thisTrack.name = thisTrack.name.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
-      thisTrack.name = thisTrack.name.replace(/\s{2,}/g," ");
-      thisTrack.album.name = thisTrack.album.name.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");
-      thisTrack.album.name = thisTrack.album.name.replace(/\s{2,}/g," ");
-      return thisTrack;
-    });
-  };
-
-  var findTrackInArray = function (track, otherTracks) {
-    for (var i = 0; i < otherTracks.length; i++) {
-      if ((track.name === otherTracks[i].name) 
-        && (track.album.name === otherTracks[i].album.name)) {
-          return true;
-      }
-    }
-    return false;
   };
 
   var indexOfArtistName = function (array, artistName) {
@@ -46,6 +32,25 @@
       }
     }
     return -1;
+  };
+
+  var dedupeTracks = function (tracks) {
+    tracks = tracks.reverse();
+    var dedupedTracks = tracks.filter(function (thisTrack, index) {
+      var otherTracks = tracks.slice(index+1, tracks.length);
+      return !findTrackInArray(thisTrack, otherTracks);
+    });
+    return dedupedTracks.reverse();
+  };
+
+  var findTrackInArray = function (track, otherTracks) {
+    for (var i = 0; i < otherTracks.length; i++) {
+      if ((track.name === otherTracks[i].name)
+        && (track.album.name === otherTracks[i].album.name)) {
+          return true;
+      }
+    }
+    return false;
   };
 
   var spotifyQuerier = {
@@ -61,7 +66,8 @@
         + track.replace(/\s/g, "%20");
       this.ajaxRequest(spotifyUrl, function () {
         var response = JSON.parse(this.responseText),
-            validTracks = validateTrackArtist(response.tracks, artist),
+            sanitizedTracks = sanitizeTrackAndAlbumNames(response.tracks),
+            validTracks = validateTrackArtist(sanitizedTracks, artist),
             tracks = dedupeTracks(validTracks);
         callback(tracks);
       }, errorCallback);

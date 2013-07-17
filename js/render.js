@@ -1,5 +1,10 @@
 ;(function (exports) {
 
+  var pauseButtonGetter = function () {
+    sourceSiteData.pauseButton = document.getElementsByClassName("szi-pause")[0];
+
+  }
+
   var render = {
     showTrackOptions: function (tracks) {
       var modalContent = addModal("large"),

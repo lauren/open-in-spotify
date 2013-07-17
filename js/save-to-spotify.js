@@ -5,19 +5,6 @@
       headEl: document.getElementsByTagName("head")[0]
     };
 
-  switch (window.location.hostname) {
-    case "songza.com":
-      var artist = document.getElementsByClassName("szi-artist")[0].innerHTML,
-          track = document.getElementsByClassName("szi-song")[0].innerHTML;
-      sourceSiteData.pauseButton = document.getElementsByClassName("szi-pause")[0];
-      sourceSiteData.currentlyPlaying = document.getElementsByClassName("szi-player-state-play").length > 0;
-      displayResults(track, artist);
-      break;
-    default:
-      render.showUnsupportedSiteMessage();
-      break;
-  }
-
   var displayResults = function (track, artist) {
     try {
       spotifyQuerier.getTracks(track, artist, function (tracks) { displayTracksOrArtists(tracks, artist); });
@@ -43,6 +30,19 @@
       render.showArtistOptions(artists);
     }
   };
+
+  switch (window.location.hostname) {
+    case "songza.com":
+      var artist = document.getElementsByClassName("szi-artist")[0].innerHTML,
+          track = document.getElementsByClassName("szi-song")[0].innerHTML;
+      sourceSiteData.pauseButton = document.getElementsByClassName("szi-pause")[0];
+      sourceSiteData.currentlyPlaying = document.getElementsByClassName("szi-player-state-play").length > 0;
+      displayResults(track, artist);
+      break;
+    default:
+      render.showUnsupportedSiteMessage();
+      break;
+  }
 
   exports.sourceSiteData = sourceSiteData;
 

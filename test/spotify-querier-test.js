@@ -53,17 +53,17 @@ describe('spotifyQuerier', function () {
     };
 
     it('should have a validTracks variable that includes only the tracks with the correct artist', function (done) {
+      var originalAjaxRequest = stubAjaxRequst({
+        "tracks": [
+          { "name": "No Scrubs",
+            "album": { "name": "Fanmail" },
+            "artists": [ { "name": "TLC" } ] },
+          { "name": "No Scrubs",
+            "album": { "name": "Fanmail" },
+            "artists": [ { "name": "Doctor Lauren Sperber" } ] }
+        ]
+      });
       spotifyQuerier.getTracks("whatevs", "TLC", function (tracks) {
-        var originalAjaxRequest = stubAjaxRequst({
-          "tracks": [
-            { "name": "No Scrubs",
-              "album": { "name": "Fanmail" },
-              "artists": [ { "name": "TLC" } ] },
-            { "name": "No Scrubs",
-              "album": { "name": "Fanmail" },
-              "artists": [ { "name": "Doctor Lauren Sperber" } ] }
-          ]
-        });
         assert(tracks.length === 1);
         assert(tracks[0].artists[0].name === "TLC");
         unstubAjaxRequest(originalAjaxRequest);

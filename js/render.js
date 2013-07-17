@@ -13,12 +13,12 @@
         var trackItemEl = document.createElement("li"),
             firstArtist = track.artists[0];
         trackItemEl.innerHTML = "<a href='" + track.href + "'>"
-          + track.name 
+          + track.name
           + "</a> by <a href='" + firstArtist.href + "'>"
           + firstArtist.name + "</a> from the album "
-          + "<em><a href='" + track.album.href + "'></em>" 
+          + "<em><a href='" + track.album.href + "'></em>"
           + track.album.name + "</a>.";
-        trackList.appendChild(trackItemEl);  
+        trackList.appendChild(trackItemEl);
       });
 
       modalContent.appendChild(trackList);
@@ -59,10 +59,10 @@
       modalHeader.innerHTML = "Not Found";
       modalContent.appendChild(modalHeader);
 
-      modalExplanation.innerHTML = "<p>Sorry, I couldn't find the track '" + sourceSiteData.track 
-        + "' or the artist " + sourceSiteData.artist 
+      modalExplanation.innerHTML = "<p>Sorry, I couldn't find the track '" + sourceSiteData.track
+        + "' or the artist " + sourceSiteData.artist
         + " on Spotify.</p><p>Try again with the next song you like.</p>";
-      modalContent.appendChild(modalExplanation); 
+      modalContent.appendChild(modalExplanation);
     },
 
     showUnsupportedSiteMessage: function () {
@@ -73,10 +73,10 @@
       modalHeader.innerHTML = "Site Not Supported";
       modalContent.appendChild(modalHeader);
 
-      modalExplanation.innerHTML = "<p>Sorry, I can't save to spotify from " 
-        + window.location.hostname + ".</p>" 
+      modalExplanation.innerHTML = "<p>Sorry, I can't save to spotify from "
+        + window.location.hostname + ".</p>"
         + "<p>Try adding a song from Songza, Pandora, or Turntable.fm.</p>";
-      modalContent.appendChild(modalExplanation);   
+      modalContent.appendChild(modalExplanation);
     },
 
     showError: function (event) {
@@ -87,9 +87,9 @@
       modalHeader.innerHTML = "Can't connect to Spotify";
       modalContent.appendChild(modalHeader);
 
-      modalExplanation.innerHTML = "<p>Sorry, I can't connect to Spotify right now.</p>" 
+      modalExplanation.innerHTML = "<p>Sorry, I can't connect to Spotify right now.</p>"
         + "<p>Try again with the next song you like.</p>" + event.target.status;
-      modalContent.appendChild(modalExplanation); 
+      modalContent.appendChild(modalExplanation);
     },
 
     pauseSourceSiteMusic: function () {
@@ -149,9 +149,9 @@
     overlay.style.height = parseInt(window.screen.height + 20, 10) + "px";
     document.body.style.overflow = "hidden";
     sourceSiteData.htmlEl.style.overflow = "hidden";
-  
+
     document.body.insertBefore(overlay, modal);
-    
+
     return modalContent;
   };
 

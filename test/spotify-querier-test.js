@@ -87,7 +87,7 @@ describe('spotifyQuerier', function () {
       });
     });
 
-    it('should invoke the callback with tracks deduped on album name and track name', function (done) {
+    it('should invoke the callback with tracks deduped on album name and track name, sanitized for punctuation', function (done) {
       var originalAjaxRequest = stubAjaxRequst({
         "tracks": [
           { "name": "No Scrubs",
@@ -96,7 +96,7 @@ describe('spotifyQuerier', function () {
           { "name": "No Scrubs: Remix",
             "album": { "name": "Fanmail" },
             "artists": [ { "name": "TLC" } ] },
-          { "name": "No Scrubs: Remix",
+          { "name": "No Scrubs Remix",
             "album": { "name": "Fanmail" },
             "artists": [ { "name": "TLC" } ] },
           { "name": "No Scrubs",

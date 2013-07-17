@@ -63,22 +63,44 @@
       modalContent.appendChild(modalExplanation);
     },
 
-    showUnsupportedSiteMessage: function (currentlyPlaying, pauseButton) {
-      var modalContent = addModal("small", currentlyPlaying, pauseButton),
+    showUnsupportedSiteMessage: function () {
+      var modalContent = addModal("small"),
           modalHeader = document.createElement("h2"),
           modalExplanation = document.createElement("h3");
 
       modalHeader.innerHTML = "Site Not Supported";
       modalContent.appendChild(modalHeader);
 
-      modalExplanation.innerHTML = "<p>Sorry, I can't save to spotify from "
+      modalExplanation.innerHTML = "<p>Sorry, I can't open in spotify from "
         + window.location.hostname + ".</p>"
         + "<p>Try adding a song from Songza, Pandora, or Turntable.fm.</p>";
       modalContent.appendChild(modalExplanation);
     },
 
-    showError: function (event, currentlyPlaying, pauseButton) {
-      var modalContent = addModal("small", currentlyPlaying, pauseButton),
+    showWrongPageMessage: function (site) {
+      var modalContent = addModal("small"),
+          modalHeader = document.createElement("h2"),
+          modalExplanation = document.createElement("h3");
+
+      var findPlaylistsAt = function () {
+        if (site === "Songza") {
+          return "Go to the <a href='http://songza.com'>Music Concierge</a> and ";
+        } else {
+          return "Go ";
+        }
+      };
+
+      modalHeader.innerHTML = "No Songs Detected";
+      modalContent.appendChild(modalHeader);
+
+      modalExplanation.innerHTML = "<p>You're almost there!</p>"
+        + "<p>" + findPlaylistsAt() + "listen to a playlist to open songs from "
+        + site + " in Spotify.";
+      modalContent.appendChild(modalExplanation);
+    },
+
+    showError: function (event) {
+      var modalContent = addModal("small"),
           modalHeader = document.createElement("h2"),
           modalExplanation = document.createElement("h3");
 
@@ -112,6 +134,7 @@
     styleSheetLink.rel = "stylesheet";
     styleSheetLink.id = "add-to-spotify-stylesheet";
     styleSheetLink.href = "http://d39ywk3d3wha95.cloudfront.net/save-to-spotify.css";
+    // styleSheetLink.href = "http://save-to-spotify.s3.amazonaws.com/save-to-spotify.css";
     document.head.appendChild(styleSheetLink);
 
     var firstBodyEl = document.body.firstChild;

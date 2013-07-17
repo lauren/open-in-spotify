@@ -38,7 +38,11 @@
 
   switch (window.location.hostname) {
     case "songza.com":
-      var siteInfo = new selectors.Songza();
+      try {
+        var siteInfo = new selectors.Songza();
+      } catch (e) {
+        render.showWrongPageMessage("Songza");
+      }
       new SaveToSpotify(siteInfo).displayResults();
       break;
     default:

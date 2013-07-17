@@ -105,7 +105,6 @@ describe('spotifyQuerier', function () {
         ]
       });
       spotifyQuerier.getTracks("whatevs", "TLC", function (tracks) {
-        console.log(JSON.stringify(tracks));
         assert(tracks.length === 3);
         assert(tracks[0].name === "No Scrubs");
         assert(tracks[0].album.name === "Fanmail");

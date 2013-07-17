@@ -11,7 +11,7 @@ describe('shims', function () {
 
   describe('#customFilter()', function () {
     it('it should only return items that are <5 in passed array', function () {
-      assert.deepEqual([1,2,3,4], [1,2,3,4,5,6,7,8].filter(function (x) {return x < 5;}));
+      assert.deepEqual([1,2,3,4,4,3,2,1], [1,2,3,4,5,6,7,8,4,3,2,1].filter(function (x) {return x < 5;}));
     });
   });
 });

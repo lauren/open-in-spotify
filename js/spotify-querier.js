@@ -58,8 +58,8 @@
     },
     getTracks: function (track, artist, callback) {
       var spotifyUrl = "http://ws.spotify.com/search/1/track.json?q="
-        + trackName.replace(/\s/g, "%20");
-      ajaxRequest(spotifyUrl, function () {
+        + track.replace(/\s/g, "%20");
+      this.ajaxRequest(spotifyUrl, function () {
         var response = JSON.parse(this.responseText),
             validTracks = validateTrackArtist(response.tracks, artist),
             tracks = dedupeTracks(validTracks);
@@ -68,8 +68,8 @@
     },
     getArtists: function (artist, callback) {
       var spotifyUrl = "http://ws.spotify.com/search/1/artist.json?q="
-        + artistName.replace(/\s/g, "%20");
-      ajaxRequest(spotifyUrl, function () {
+        + artist.replace(/\s/g, "%20");
+      this.ajaxRequest(spotifyUrl, function () {
         var response = JSON.parse(this.responseText),
             artists = response.artists;
         callback(artists);

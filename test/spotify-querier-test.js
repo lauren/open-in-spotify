@@ -37,14 +37,24 @@ describe('spotifyQuerier', function () {
   });
 
   describe('#getTracks()', function () {
-    var savedAjaxRequest;
 
-    before(function () {
-
-      savedAjaxRequest = spotifyQuerier.ajaxRequest;
+    var stubAjaxRequst = function (json) {
+      var savedAjaxRequest = spotifyQuerier.ajaxRequest;
 
       spotifyQuerier.ajaxRequest = function (_, callback) {
-        var responseText = JSON.stringify({
+        var responseText = JSON.stringify(json);
+        callback.apply({responseText: responseText});
+      };
+      return savedAjaxRequest;
+    };
+
+    var unstubAjaxRequest = function (originalAjaxRequest) {
+      spotifyQuerier.ajaxRequest = originalAjaxRequest;
+    };
+
+    it('should have a validTracks variable that includes only the tracks with the correct artist', function (done) {
+      spotifyQuerier.getTracks("whatevs", "TLC", function (tracks) {
+        var originalAjaxRequest = stubAjaxRequst({
           "tracks": [
             { "name": "No Scrubs",
               "album": { "name": "Fanmail" },
@@ -54,18 +64,11 @@ describe('spotifyQuerier', function () {
               "artists": [ { "name": "Doctor Lauren Sperber" } ] }
           ]
         });
-        callback.apply({responseText: responseText});
-      };
-    });
-
-    it('should have a validTracks variable that includes only the tracks with the correct artist', function (done) {
-      spotifyQuerier.getTracks("whatevs", "TLC", function (tracks) {
         assert(tracks.length === 1);
         assert(tracks[0].artists[0].name === "TLC");
-        spotifyQuerier.ajaxRequest = savedAjaxRequest;
+        unstubAjaxRequest(originalAjaxRequest);
         done();
       });
-
     });
 
   });

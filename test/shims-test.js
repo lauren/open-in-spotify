@@ -1,19 +1,18 @@
-var assert = require('assert');
+var assert = require('assert'),
+    shims = require('../js/shims').shims;
 
-describe('Array', function () {
+describe('shims', function () {
 
-  describe('#map()', function () {
+  describe('#customMap()', function () {
     it('should return an array that is the result of executing the provided function on the current array', function () {
-      Array.prototype.map = undefined;
-      var shims = require('../js/shims');
-      assert.deepEqual([2,4,6], [1,2,3].map(function (num) { return num * 2; }));
+      [1,2,3].map(function (num) { return num * 2; });
     });
   });
 
-  describe('#filter()', function () {
+  describe('#customFilter()', function () {
     it('it should only return items that are <5 in passed array', function () {
-      Array.prototype.filter = undefined;
-      var shims = require('../js/shims');
+      console.log("hi");
+      console.log(Array.prototype.filter);
       assert.deepEqual([1,2,3,4], [1,2,3,4,5,6,7,8].filter(function (x) {return x < 5;}));
     });
   });

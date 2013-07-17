@@ -1,21 +1,7 @@
 ;(function (exports) {
 
-  var searchForArtist = function (artistName, successCallback) {
-    var spotifyUrl = "http://ws.spotify.com/search/1/artist.json?q="
-      + artistName.replace(/\s/g, "%20");
-    querySpotify(spotifyUrl, successCallback);
-  };
-
-  var searchForTrack = function (trackName, successCallback) {
-    var spotifyUrl = "http://ws.spotify.com/search/1/track.json?q="
-      + trackName.replace(/\s/g, "%20");
-    querySpotify(spotifyUrl, successCallback);
-  };
-
-  var querySpotify = function (spotifyUrl, callback) {
-    ajaxRequest(spotifyUrl, callback, function (error) {
-      throw "Can't connect to Spotify.";
-    });
+  var errorCallback = function (error) {
+    throw "Can't connect to Spotify.";
   };
 
   var validateTrackArtist = function (tracks, artist) {
@@ -71,19 +57,23 @@
       xhr.send();
     },
     getTracks: function (track, artist, callback) {
-      searchForTrack(track, function () {
+      var spotifyUrl = "http://ws.spotify.com/search/1/track.json?q="
+        + trackName.replace(/\s/g, "%20");
+      ajaxRequest(spotifyUrl, function () {
         var response = JSON.parse(this.responseText),
             validTracks = validateTrackArtist(response.tracks, artist),
             tracks = dedupeTracks(validTracks);
         callback(tracks);
-      });
+      }, errorCallback);
     },
     getArtists: function (artist, callback) {
-      searchForArtist(artist, function () {
+      var spotifyUrl = "http://ws.spotify.com/search/1/artist.json?q="
+        + artistName.replace(/\s/g, "%20");
+      ajaxRequest(spotifyUrl, function () {
         var response = JSON.parse(this.responseText),
             artists = response.artists;
         callback(artists);
-      });
+      }, errorCallback);
     }
   };
 

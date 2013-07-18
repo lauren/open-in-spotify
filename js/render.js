@@ -73,7 +73,8 @@
 
       modalExplanation.innerHTML = "<p>Sorry, I can't open in spotify from "
         + window.location.hostname + ".</p>"
-        + "<p>Try adding a song from Songza, Pandora, or Turntable.fm.</p>";
+        + "<p>Try adding a song from <a href='http://songza.com'>Songza</a>,"
+        + "<a href='http://pandora.com'>Pandora</a>, or <a href='http://turntable.fm'>Turntable.fm</a>.</p>";
       modalContent.appendChild(modalExplanation);
     },
 

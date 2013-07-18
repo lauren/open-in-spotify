@@ -19,7 +19,8 @@ Contributing
 1. `npm install`
 2. `npm install grunt-contrib-uglify --save-dev`
 3. `npm install grunt-contrib-less --save-dev`
-4. Code!
-5. Run tests with `node node_modules/mocha/bin/mocha`.
-6. Compile LESS with `grunt less`.
-7. Concatenate and minify JS wiht `grunt uglify`.
+4. `npm install grunt-contrib-watch --save-dev`
+5. `npm install grunt-contrib-jshint --save-dev`
+6. `grunt watch`
+7. Code!
+8. Run tests with `node node_modules/mocha/bin/mocha`.

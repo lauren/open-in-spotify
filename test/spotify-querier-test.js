@@ -1,7 +1,8 @@
 var assert = require('assert');
-var spotifyQuerier = require('../js/spotify-querier').spotifyQuerier;
+var spotifyQuerier = require('../src/spotify-querier').spotifyQuerier;
 
 describe('spotifyQuerier', function () {
+  console.log("hi");
 
   var stubXHR = function () {
     global.XMLHttpRequest = function () {

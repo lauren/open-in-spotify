@@ -29,12 +29,24 @@ module.exports = function(grunt) {
           "build/save-to-spotify.css": "src/save-to-spotify.less"
         }
       }
+    },
+    watch: {
+      js: {
+        files: ['src/*.js'],
+        tasks: ['uglify'],
+      },
+      less: {
+        files: ['/src/*.less'],
+        tasks: ['less'],
+      }
     }
   });
 
   // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
 
   // Default task(s).
   grunt.registerTask('default', ['uglify']);

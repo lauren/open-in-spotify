@@ -1,5 +1,5 @@
 var assert = require('assert'),
-    shims = require('../js/shims').shims;
+    shims = require('../src/shims').shims;
 
 describe('shims', function () {
 

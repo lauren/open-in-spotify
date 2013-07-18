@@ -24,7 +24,7 @@
     } else if (tracks.length === 1) {
       render.openInSpotify(tracks[0], this.siteInfo.currentlyPlaying, this.siteInfo.pauseButton);
     } else {
-      render.showTrackOptions(tracks, this.siteInfo.currentlyPlaying, this.siteInfo.pauseButton);
+      render.showTrackOptions(tracks, this.siteInfo.currentlyPlaying, this.siteInfo.pauseButton, this.siteInfo.playButton);
     }
   };
 
@@ -53,14 +53,22 @@
       }
       new SaveToSpotify(siteInfo).displayResults();
       break;
-    // case "pandora.com": case "www.pandora.com":
-    //   try {
-    //     var siteInfo = new selectors.Pandora();
-    //   } catch (e) {
-    //     render.showWrongPageMessage("Pandora");
-    //   }
-    //   new SaveToSpotify(siteInfo).displayResults();
-    //   break;
+    case "last.fm": case "www.last.fm":
+      try {
+        var siteInfo = new selectors.LastFM();
+      } catch (e) {
+        render.showWrongPageMessage("last.fm");
+      }
+      new SaveToSpotify(siteInfo).displayResults();
+      break;
+    case "pandora.com": case "www.pandora.com":
+      try {
+        var siteInfo = new selectors.Pandora();
+      } catch (e) {
+        render.showWrongPageMessage("Pandora");
+      }
+      new SaveToSpotify(siteInfo).displayResults();
+      break;
     default:
       render.showUnsupportedSiteMessage();
       break;

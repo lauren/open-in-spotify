@@ -1,8 +1,8 @@
 ;(function (exports) {
 
   var render = {
-    showTrackOptions: function (tracks, currentlyPlaying, pauseButton) {
-      var modalContent = addModal("large", currentlyPlaying, pauseButton),
+    showTrackOptions: function (tracks, currentlyPlaying, pauseButton, playButton) {
+      var modalContent = addModal("large", currentlyPlaying, pauseButton, playButton),
           modalHeader = document.createElement("h2"),
           trackList = document.createElement("ul");
 
@@ -58,8 +58,8 @@
       modalContent.appendChild(modalHeader);
 
       modalExplanation.innerHTML = "<p>Sorry, I couldn't find the track '" + track
-        + "' or the artist " + artist
-        + " on Spotify.</p><p>Try again with the next song you like.</p>";
+        + "' or the artist '" + artist
+        + "' on Spotify.</p><p>Try again with the next song you like.</p>";
       modalContent.appendChild(modalExplanation);
     },
 
@@ -74,7 +74,7 @@
       modalExplanation.innerHTML = "<p>Sorry, I can't open songs from "
         + window.location.hostname + " in Spotify.</p>"
         + "<p>Try adding a song from <a href='http://songza.com'>Songza</a> or "
-        + "<a href='http://turntable.fm'>Turntable.fm</a>.</p>";
+        + "<a href='http://last.fm'>Last.fm</a>.</p>";
       modalContent.appendChild(modalExplanation);
     },
 
@@ -88,9 +88,11 @@
           return "Go to the <a href='http://songza.com'>Music Concierge</a> and select a station. ";
         } else if (site === "Pandora") {
           return "Go to the <a href='http://pandora.com'>homepage</a> and search for "
-            + "an artist to create a radio station.";
+            + "an artist to create a radio station. ";
         } else if (site === "turntable.fm") {
-          return "Go to the <a href='http://turntable.fm'>homepage</a> and find a room to join.";
+          return "Go to the <a href='http://turntable.fm'>homepage</a> and find a room to join. ";
+        } else if (site === "last.fm") {
+          return "Go to the <a href='http://last.fm'>homepage</a> and find a station to listen to. "
         } else {
           return "Go ";
         }
@@ -125,16 +127,16 @@
 
   };
 
-  var closeModal = function (currentlyPlaying, pauseButton) {
+  var closeModal = function (currentlyPlaying, playButton) {
     document.body.removeChild(document.getElementById("add-to-spotify-overlay"));
     document.body.removeChild(document.getElementById("add-to-spotify-modal"));
     document.head.removeChild(document.getElementById("add-to-spotify-stylesheet"));
     document.body.style.overflow = "auto";
     document.getElementsByTagName("html")[0].style.overflow = "auto";
-    toggleSourceSiteMusic(currentlyPlaying, pauseButton);
+    toggleSourceSiteMusic(currentlyPlaying, playButton);
   };
 
-  var addModal = function (type, currentlyPlaying, pauseButton) {
+  var addModal = function (type, currentlyPlaying, pauseButton, playButton) {
     var styleSheetLink = document.createElement("link");
     styleSheetLink.type = "text/css";
     styleSheetLink.rel = "stylesheet";
@@ -163,7 +165,7 @@
     document.body.insertBefore(modal, firstBodyEl);
 
     bindEvent(closeBox, "click", function () {
-      closeModal(currentlyPlaying, pauseButton)
+      closeModal(currentlyPlaying, playButton)
     });
 
     var overlay = document.createElement("div");
@@ -187,9 +189,9 @@
     }
   };
 
-  var toggleSourceSiteMusic = function (currentlyPlaying, pauseButton) {
+  var toggleSourceSiteMusic = function (currentlyPlaying, button) {
     if (currentlyPlaying) {
-      pauseButton.click();
+      button.click();
     }
   };
 

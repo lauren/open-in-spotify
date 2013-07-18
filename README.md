@@ -12,3 +12,14 @@ Open in Spotify to the rescue!
 3. Click + Open in Spotify to open the song you're listening to in Spotify.
 
 4. Play it over and over, add it to a playlist, do whatever your Spotify thing is.
+
+Contributing
+------------
+
+1. `npm install`
+2. `npm install grunt-contrib-uglify --save-dev`
+3. `npm install grunt-contrib-less --save-dev`
+4. Code!
+5. Run tests with `node node_modules/mocha/bin/mocha`.
+6. Compile LESS with `grunt less`.
+7. Concatenate and minify JS wiht `grunt uglify`.

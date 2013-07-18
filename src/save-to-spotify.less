@@ -1,0 +1,77 @@
+/*
+* Open in Spotify CSS v0.0.1
+* Copyright 2013 Lauren Sperber
+* https://github.com/lauren/open-in-spotify/blob/master/LICENSE
+*/
+
+.add-to-spotify-modal {
+	margin: auto auto;
+	background-color: #fff;
+	z-index: 1450;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	overflow: auto;
+	width: 70%;
+	height: 90%;
+	border-radius: 5px;
+	color: #333;
+	font-family: 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	&.small {
+		width: 400px;
+		height: 230px;
+	}
+
+	.close-modal {
+		position: absolute;
+		height: auto;
+		width: auto;
+		right: 0;
+		top: 0;
+		font-size: 40px;
+		line-height: 15px;
+		padding: 10px 10px 20px 10px;
+		border: 1px solid #666;
+		cursor: pointer;
+	}
+
+	.modal-content {
+		padding: 15px;
+		h2 {
+			font-size: 26px;
+			font-style: normal;
+			font-weight: bold;
+			line-height: 28px;
+			margin-bottom: 1em;
+		}
+		h3 {
+			font-size: 20px;
+			font-style: normal;
+			font-weight: normal;
+			line-height: 22px;
+			margin-bottom: 1em;
+		}
+		ul {
+			font-size: 20px;
+			line-height: 22px;
+			margin-left: 20px;
+			li {
+				padding-bottom: 10px;
+			}
+		}
+		p {
+			margin-bottom: 1em;
+		}
+	}
+}
+
+.add-to-spotify-overlay {
+	background-color: #000;
+	opacity: 0.7;
+	z-index: 1400;
+	width: 100%;
+	margin-top: -15px;
+	position: absolute;
+}

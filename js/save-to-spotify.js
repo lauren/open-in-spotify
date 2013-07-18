@@ -37,7 +37,7 @@
   };
 
   switch (window.location.hostname) {
-    case "songza.com":
+    case "songza.com": case "www.songza.com":
       try {
         var siteInfo = new selectors.Songza();
       } catch (e) {
@@ -45,7 +45,16 @@
       }
       new SaveToSpotify(siteInfo).displayResults();
       break;
+    // case "pandora.com": case "www.pandora.com":
+    //   try {
+    //     var siteInfo = new selectors.Pandora();
+    //   } catch (e) {
+    //     render.showWrongPageMessage("Pandora");
+    //   }
+    //   new SaveToSpotify(siteInfo).displayResults();
+    //   break;
     default:
+      console.log(window.location.hostname);
       render.showUnsupportedSiteMessage();
       break;
   }

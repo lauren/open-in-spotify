@@ -73,8 +73,8 @@
 
       modalExplanation.innerHTML = "<p>Sorry, I can't open in spotify from "
         + window.location.hostname + ".</p>"
-        + "<p>Try adding a song from <a href='http://songza.com'>Songza</a>,"
-        + "<a href='http://pandora.com'>Pandora</a>, or <a href='http://turntable.fm'>Turntable.fm</a>.</p>";
+        + "<p>Try adding a song from <a href='http://songza.com'>Songza</a> or "
+        + "<a href='http://turntable.fm'>Turntable.fm</a>.</p>";
       modalContent.appendChild(modalExplanation);
     },
 
@@ -85,7 +85,10 @@
 
       var findPlaylistsAt = function () {
         if (site === "Songza") {
-          return "Go to the <a href='http://songza.com'>Music Concierge</a> and ";
+          return "Go to the <a href='http://songza.com'>Music Concierge</a> and select a station. ";
+        } else if (site === "Pandora") {
+          return "Go to the <a href='http://pandora.com'>homepage</a> and search for "
+            + "an artist to create a radio station."
         } else {
           return "Go ";
         }
@@ -95,7 +98,7 @@
       modalContent.appendChild(modalHeader);
 
       modalExplanation.innerHTML = "<p>You're almost there!</p>"
-        + "<p>" + findPlaylistsAt() + "listen to a playlist to open songs from "
+        + "<p>" + findPlaylistsAt() + "Then you'll be able to open songs from "
         + site + " in Spotify.";
       modalContent.appendChild(modalExplanation);
     },

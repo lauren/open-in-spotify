@@ -36,7 +36,7 @@ module.exports = function(grunt) {
         tasks: ['uglify'],
       },
       less: {
-        files: ['/src/*.less'],
+        files: ['src/*.less'],
         tasks: ['less'],
       }
     }

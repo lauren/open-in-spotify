@@ -45,6 +45,14 @@
       }
       new SaveToSpotify(siteInfo).displayResults();
       break;
+    case "turntable.fm": case "www.turntable.fm":
+      try {
+        var siteInfo = new selectors.TurntableFM();
+      } catch (e) {
+        render.showWrongPageMessage("turntable.fm");
+      }
+      new SaveToSpotify(siteInfo).displayResults();
+      break;
     // case "pandora.com": case "www.pandora.com":
     //   try {
     //     var siteInfo = new selectors.Pandora();
@@ -54,7 +62,6 @@
     //   new SaveToSpotify(siteInfo).displayResults();
     //   break;
     default:
-      console.log(window.location.hostname);
       render.showUnsupportedSiteMessage();
       break;
   }

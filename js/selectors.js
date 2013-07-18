@@ -13,6 +13,11 @@
       this.album = document.getElementsByClassName("albumTitle")[0].innerHTML;
       this.pauseButton = document.getElementsByClassName("pauseButton")[0];
       this.currentlyPlaying = this.pauseButton.style.display === "block";
+    },
+    TurntableFM: function () {
+      this.track = document.getElementsByClassName("songboard-title")[0].innerHTML;
+      this.artist = document.getElementsByClassName("songboard-artist")[0].innerHTML;
+      this.currentlyPlaying = false; // now pause button on turntable.fm, so skip pausing music
     }
   }
 

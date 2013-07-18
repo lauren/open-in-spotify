@@ -88,7 +88,9 @@
           return "Go to the <a href='http://songza.com'>Music Concierge</a> and select a station. ";
         } else if (site === "Pandora") {
           return "Go to the <a href='http://pandora.com'>homepage</a> and search for "
-            + "an artist to create a radio station."
+            + "an artist to create a radio station.";
+        } else if (site === "turntable.fm") {
+          return "Go to the <a href='http://turntable.fm'>homepage</a> and find a room to join.";
         } else {
           return "Go ";
         }

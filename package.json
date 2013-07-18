@@ -2,6 +2,6 @@
   "name": "save-to-spotify",
   "version": "0.0.1",
   "dependencies": {
-    "mocha": "*"
+    "mocha": "1.12.0"
   }
 }

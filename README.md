@@ -5,7 +5,7 @@ Ever hear a song in Songza or last.fm and wish you could press repeat or save it
 
 Open in Spotify to the rescue!
 
-1. Add this bookmarklet to your Bookmarks bar: [+ Open in Spotify](javascript:(function(){_my_script=document.createElement('SCRIPT');_my_script.type='text/javascript';_my_script.src='http://save-to-spotify.s3.amazonaws.com/save-to-spotify.min.js';document.getElementsByTagName('head')[0].appendChild(_my_script);})();)
+1. Add the bookmarklet to your Bookmarks bar.
 
 2. Go to your favorite Songza or last.fm station.
 

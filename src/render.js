@@ -2,7 +2,7 @@
 
   var render = {
     showTrackOptions: function (tracks, currentlyPlaying, pauseButton, playButton) {
-      var modalContent = addModal("large", currentlyPlaying, pauseButton, playButton),
+      var modalContent = addModal("large", currentlyPlaying, playButton),
           modalHeader = document.createElement("h2"),
           trackList = document.createElement("ul");
 
@@ -136,7 +136,7 @@
     toggleSourceSiteMusic(currentlyPlaying, playButton);
   };
 
-  var addModal = function (type, currentlyPlaying, pauseButton, playButton) {
+  var addModal = function (type, currentlyPlaying, playButton) {
     var styleSheetLink = document.createElement("link");
     styleSheetLink.type = "text/css";
     styleSheetLink.rel = "stylesheet";

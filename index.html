@@ -10,10 +10,10 @@
 
 <body>
 
-  <h1>Open in Spotify</h1>
-  <h2>Discover songs on web radio.<br/>Open them in Spotify.<br/>Play them on repeat.</h2>
+  <h1 id="header">Open in Spotify</h1>
+  <h2 id="tagline">Discover songs on web radio.<br/>Open them in Spotify.<br/>Play them on repeat.</h2>
 
-  <ol>
+  <ol id="instructions">
     <li>Drag this button to your bookmarks bar:<br/>
       <a class="open-in-spotify-button" href="javascript:(function(){_my_script=document.createElement('SCRIPT');_my_script.type='text/javascript';_my_script.src='http://d39ywk3d3wha95.cloudfront.net/open-in-spotify.min.js';document.getElementsByTagName('head')[0].appendChild(_my_script);})();">&plus; Open in Spotify</a>
     </li>
@@ -22,9 +22,26 @@
     <li>Play it over and over or add it to a playlist. Whatever your Spotify thing is.</li>
   </ol>
 
-  <footer>
+  <footer id="footer">
     &copy; 2013 <a href="http://laurensperber">Lauren Sperber</a> | <a href="https://github.com/lauren/open-in-spotify">source code</a>
   </footer>
+
+  <script type="text/javascript">
+    (function () {
+      window.onload = function () {
+        document.getElementById("header").className = "visible";
+        setTimeout(function () {
+          document.getElementById("tagline").className = "visible";
+        },100);
+        setTimeout(function () {
+          document.getElementById("instructions").className = "visible";
+        },100);
+        setTimeout(function () {
+          document.getElementById("footer").className = "visible";
+        },100);
+      }
+    })();
+  </script>
 
 </body>
 

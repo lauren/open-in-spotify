@@ -29,6 +29,17 @@
           border-radius: @radius;
 }
 
+.transition(@transition) {
+  -webkit-transition: @transition;
+     -moz-transition: @transition;
+       -o-transition: @transition;
+          transition: @transition;
+}
+
+.opacity-transition {
+  .transition(opacity 0.5s ease-in-out);
+}
+
 body {
   text-align: center;
   font-family: @bodyFont;
@@ -37,11 +48,17 @@ body {
   max-width: 600px;
 }
 
+.visible {
+  opacity: 1;
+}
+
 footer {
   font-family: @labelFont;
   font-size: 16px;
   margin-top: 50px;
   line-height: 22px;
+  opacity: 0;
+  .opacity-transition;
 }
 
 h1 {
@@ -51,6 +68,8 @@ h1 {
   margin-bottom:20px;
   display: inline-block;
   float: left;
+  opacity: 0;
+  .opacity-transition;
 }
 
 h2 {
@@ -60,6 +79,8 @@ h2 {
   font-weight: normal;
   font-family: @labelFont;
   line-height: 18px;
+  opacity: 0;
+  .opacity-transition;
 }
 
 ol {
@@ -69,6 +90,8 @@ ol {
   text-align: left;
   margin-left:30px;
   clear: both;
+  opacity: 0;
+  .opacity-transition;
   li {
     margin-bottom: 10px;
   }

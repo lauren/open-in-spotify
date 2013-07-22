@@ -1,0 +1,10 @@
+{
+  "name": "open-in-spotify-docs",
+  "version": "0.0.1",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-controb-less": "~0.6.4",
+    "grunt-contrib-watch": "~0.4.4",
+    "grunt-contrib-less": "~0.6.4"
+  }
+}

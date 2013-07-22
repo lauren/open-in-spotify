@@ -1,9 +1,9 @@
-Open in Spotify [![Build Status](https://travis-ci.org/lauren/open-in-spotify.png?branch=master)](https://travis-ci.org/lauren/open-in-spotify)
+[Open in Spotify](http://lauren.github.io/open-in-spotify/) [![Build Status](https://travis-ci.org/lauren/open-in-spotify.png?branch=master)](https://travis-ci.org/lauren/open-in-spotify)
 ===============
 
 Discover songs on Songza or last.fm. Open them in Spotify. Play them on repeat. Rejoyce.
 
-1. Add the bookmarklet to your Bookmarks bar.
+1. Add the bookmarklet to your Bookmarks bar from http://lauren.github.io/open-in-spotify/.
 
 2. Go to your favorite Songza or last.fm station.
 

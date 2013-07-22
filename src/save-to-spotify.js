@@ -11,7 +11,7 @@
         self.displayTracksOrArtists.call(self,tracks);
       });
     } catch (e) {
-      render.showError(e, self.siteInfo.currentlyPlaying, self.siteInfo.pauseButton);
+      render.showError(e);
     }
   };
 

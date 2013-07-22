@@ -8,7 +8,7 @@ module.exports = function(grunt) {
         banner: '/*! Open in Spotify JS v0.0.1 | Copyright 2013 Lauren Sperber https://github.com/lauren/pick-a-color/blob/master/LICENSE | <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
       build: {
-        src: ['src/selectors.js', 'src/spotify-querier.js', 'src/render.js', 'src/save-to-spotify.js', 'src/shims.js'],
+        src: ['src/selectors.js', 'src/music-controller.js', 'src/spotify-querier.js', 'src/render.js', 'src/save-to-spotify.js', 'src/shims.js'],
         dest: 'build/open-in-spotify.min.js'
       }
     },
@@ -33,12 +33,16 @@ module.exports = function(grunt) {
     watch: {
       js: {
         files: ['src/*.js'],
-        tasks: ['uglify'],
+        tasks: ['uglify', 'jshint'],
       },
       less: {
         files: ['src/*.less'],
         tasks: ['less'],
       }
+    },
+    jshint: {
+      all: ['Gruntfile.js', 'src/*.js', 'test/**/*.js'],
+      force: true
     }
   });
 

@@ -29,6 +29,6 @@
   exports.shims = {
     customFilter: customFilter,
     customMap: customMap
-  }
+  };
 
 })(typeof exports === "undefined" ? this : exports);

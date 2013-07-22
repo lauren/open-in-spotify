@@ -1,5 +1,7 @@
 ;(function (exports) {
 
+  var thisMusicController;
+
   var SaveToSpotify = function (siteInfo) {
     this.siteInfo = siteInfo;
   };
@@ -22,9 +24,9 @@
         self.displayArtists.call(self, artists);
       });
     } else if (tracks.length === 1) {
-      render.openInSpotify(tracks[0], this.siteInfo.currentlyPlaying, this.siteInfo.pauseButton);
+      render.openInSpotify(tracks[0]);
     } else {
-      render.showTrackOptions(tracks, this.siteInfo.currentlyPlaying, this.siteInfo.pauseButton, this.siteInfo.playButton);
+      render.showTrackOptions(tracks);
     }
   };
 
@@ -40,6 +42,7 @@
     case "songza.com": case "www.songza.com":
       try {
         var siteInfo = new selectors.Songza();
+        musicController = new musicController("Songza");
       } catch (e) {
         render.showWrongPageMessage("Songza");
       }
@@ -48,6 +51,7 @@
     case "turntable.fm": case "www.turntable.fm":
       try {
         var siteInfo = new selectors.TurntableFM();
+        musicController = new musicController("TurntableFM");
       } catch (e) {
         render.showWrongPageMessage("turntable.fm");
       }
@@ -56,6 +60,7 @@
     case "last.fm": case "www.last.fm":
       try {
         var siteInfo = new selectors.LastFM();
+        musicController = new musicController("LastFM");
       } catch (e) {
         render.showWrongPageMessage("last.fm");
       }
@@ -64,6 +69,7 @@
     case "pandora.com": case "www.pandora.com":
       try {
         var siteInfo = new selectors.Pandora();
+        musicController = new musicController("Pandora");
       } catch (e) {
         render.showWrongPageMessage("Pandora");
       }
@@ -73,5 +79,7 @@
       render.showUnsupportedSiteMessage();
       break;
   }
+
+  exports.thisMusicController = thisMusicController;
 
 })(typeof exports === "undefined" ? this : exports);

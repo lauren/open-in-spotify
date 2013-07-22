@@ -1,8 +1,8 @@
 ;(function (exports) {
 
   var render = {
-    showTrackOptions: function (tracks, currentlyPlaying, pauseButton, playButton) {
-      var modalContent = addModal("large", currentlyPlaying, playButton),
+    showTrackOptions: function (tracks) {
+      var modalContent = addModal("large"),
           modalHeader = document.createElement("h2"),
           trackList = document.createElement("ul");
 
@@ -20,11 +20,8 @@
           + track.album.name + "</a>.";
         trackList.appendChild(trackItemEl);
       });
-
       modalContent.appendChild(trackList);
-
-      toggleSourceSiteMusic(currentlyPlaying, pauseButton);
-
+      musicController.pause();
     },
 
     showArtistOptions: function (artists) {
@@ -44,9 +41,8 @@
         artistItemEl.innerHTML = "<a href='" + artist.href + "'>" + artist.name + "</a>";
         artistList.appendChild(artistItemEl);
       });
-
       modalContent.appendChild(artistList);
-
+      musicController.pause();
     },
 
     showNotFoundMessage: function (track, artist) {
@@ -61,6 +57,7 @@
         + "' or the artist '" + artist
         + "' on Spotify.</p><p>Try again with the next song you like.</p>";
       modalContent.appendChild(modalExplanation);
+      musicController.pause();
     },
 
     showUnsupportedSiteMessage: function () {
@@ -120,20 +117,20 @@
       modalContent.appendChild(modalExplanation);
     },
 
-    openInSpotify: function (track, currentlyPlaying, pauseButton) {
-      toggleSourceSiteMusic(currentlyPlaying,pauseButton);
+    openInSpotify: function (track) {
+      musicController.pause();
       window.location = track.href;
     }
 
   };
 
-  var closeModal = function (currentlyPlaying, playButton) {
+  var closeModal = function () {
     document.body.removeChild(document.getElementById("add-to-spotify-overlay"));
     document.body.removeChild(document.getElementById("add-to-spotify-modal"));
     document.head.removeChild(document.getElementById("add-to-spotify-stylesheet"));
     document.body.style.overflow = "auto";
     document.getElementsByTagName("html")[0].style.overflow = "auto";
-    toggleSourceSiteMusic(currentlyPlaying, playButton);
+    musicController.play();
   };
 
   var addModal = function (type, currentlyPlaying, playButton) {
@@ -165,7 +162,7 @@
     document.body.insertBefore(modal, firstBodyEl);
 
     bindEvent(closeBox, "click", function () {
-      closeModal(currentlyPlaying, playButton)
+      closeModal();
     });
 
     var overlay = document.createElement("div");
@@ -189,12 +186,6 @@
     }
   };
 
-  var toggleSourceSiteMusic = function (currentlyPlaying, button) {
-    if (currentlyPlaying) {
-      button.click();
-    }
-  };
-
   exports.render = render;
 
-})(typeof exports === "undefined" ? this : modalExplanation);
+})(typeof exports === "undefined" ? this : exports);

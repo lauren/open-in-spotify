@@ -29,6 +29,6 @@
       this.playButton = document.getElementById("radioControlPlay").children[0];
       this.currentlyPlaying = document.getElementsByClassName("playing").length > 1;
     }
-  }
+  };
 
-})(typeof exports === "undefined" ? this : exports)
+})(typeof exports === "undefined" ? this : exports);

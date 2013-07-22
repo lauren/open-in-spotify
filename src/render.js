@@ -139,7 +139,7 @@
     styleSheetLink.rel = "stylesheet";
     styleSheetLink.id = "add-to-spotify-stylesheet";
     styleSheetLink.href = "http://d39ywk3d3wha95.cloudfront.net/save-to-spotify.css";
-    // styleSheetLink.href = "http://save-to-spotify.s3.amazonaws.com/save-to-spotify.css";
+    // styleSheetLink.href = "http://save-to-spotify.s3.amazonaws.com/test/save-to-spotify.css";
     document.head.appendChild(styleSheetLink);
 
     var firstBodyEl = document.body.firstChild;
@@ -171,7 +171,7 @@
     overlay.style.height = parseInt(window.screen.height + 20, 10) + "px";
     document.body.style.overflow = "hidden";
     document.getElementsByTagName("html")[0].style.overflow = "hidden";
-
+// 
     document.body.insertBefore(overlay, modal);
 
     return modalContent;

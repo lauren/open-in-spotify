@@ -1,7 +1,7 @@
-.add-to-spotify-modal{margin:auto auto;background-color:#fff;z-index:1450;position:fixed;left:0;right:0;top:0;bottom:0;overflow:auto;width:70%;height:90%;border-radius:5px;color:#333;font-family:'HelveticaNeue','Helvetica Neue',Helvetica,Arial,sans-serif}.add-to-spotify-modal.small{width:400px;height:230px}
+.add-to-spotify-modal{margin:auto auto;background-color:#fff;z-index:1450;position:fixed;left:0;right:0;top:0;bottom:0;margin:5% 15%;border-radius:5px;overflow:auto;color:#333;font-family:'HelveticaNeue','Helvetica Neue',Helvetica,Arial,sans-serif}.add-to-spotify-modal.small{width:400px;height:230px}
 .add-to-spotify-modal .close-modal{position:absolute;height:auto;width:auto;right:0;top:0;font-size:40px;line-height:15px;padding:10px 10px 20px 10px;border:1px solid #666;cursor:pointer}
 .add-to-spotify-modal .modal-content{padding:15px}.add-to-spotify-modal .modal-content h2{font-size:26px;font-style:normal;font-weight:bold;line-height:28px;margin-bottom:1em}
 .add-to-spotify-modal .modal-content h3{font-size:20px;font-style:normal;font-weight:normal;line-height:22px;margin-bottom:1em}
-.add-to-spotify-modal .modal-content ul{font-size:20px;line-height:22px;margin-left:20px}.add-to-spotify-modal .modal-content ul li{padding-bottom:10px}
+.add-to-spotify-modal .modal-content ul{font-size:20px;line-height:22px}.add-to-spotify-modal .modal-content ul li{padding-bottom:10px}
 .add-to-spotify-modal .modal-content p{margin-bottom:1em}
 .add-to-spotify-overlay{background-color:#000;opacity:0.7;z-index:1400;width:100%;margin-top:-15px;position:absolute}

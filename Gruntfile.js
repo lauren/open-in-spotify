@@ -33,7 +33,7 @@ module.exports = function(grunt) {
     watch: {
       js: {
         files: ['src/*.js'],
-        tasks: ['uglify', 'jshint'],
+        tasks: ['jshint', 'uglify'],
       },
       less: {
         files: ['src/*.less'],
@@ -42,7 +42,10 @@ module.exports = function(grunt) {
     },
     jshint: {
       all: ['Gruntfile.js', 'src/*.js', 'test/**/*.js'],
-      force: true
+      options: {
+        laxbreak: true,
+        force: true
+      }
     }
   });
 

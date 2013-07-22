@@ -1,5 +1,7 @@
 ;(function (exports) {
 
+  // map and filter are defined outside of Array.prototype so they can
+  // be tested.
   var customMap = function (thisFunction) {
     var result = [];
     for (var i = 0; i < this.length; i++) {

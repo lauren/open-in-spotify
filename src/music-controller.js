@@ -1,5 +1,8 @@
 ;(function (exports) {
 
+  // grabs play and pause buttons from each supported site.
+  // currentlyPlaying records whether music was playing at the time
+  // the bookmarklet was invoked.
   var musicController = function (site) {
     if (site === "Songza") {
       this.pauseButton = document.getElementsByClassName("szi-pause")[0];
@@ -10,7 +13,7 @@
       this.playButton = this.pauseButton;
       this.currentlyPlaying = this.pauseButton.style.display === "block";
     } else if (site === "TurntableFM") {
-      this.currentlyPlaying = false; // now pause button on turntable.fm, so skip pausing music
+      this.currentlyPlaying = false; // no pause button on turntable.fm, so skip pausing music
     } else if (site === "LastFM") {
       this.pauseButton = document.getElementById("radioControlPause").children[0];
       this.playButton = document.getElementById("radioControlPlay").children[0];

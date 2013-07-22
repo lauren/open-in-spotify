@@ -1,6 +1,7 @@
 ;(function (exports) {
 
   var render = {
+    // adds modal to DOM, lists tracks in the modal, and pauses music
     showTrackOptions: function (tracks) {
       var modalContent = addModal("large"),
           modalHeader = document.createElement("h2"),
@@ -24,6 +25,7 @@
       musicController.pause();
     },
 
+    // adds modal to DOM, lists artists in the modal, and pauses music
     showArtistOptions: function (artists) {
       var modalContent = addModal("large"),
           modalHeader = document.createElement("h2"),
@@ -75,6 +77,9 @@
       modalContent.appendChild(modalExplanation);
     },
 
+    // message informing user she's on a supported site but not
+    // on a page with music. custom message depending on site
+    // provides instructions to find music.
     showWrongPageMessage: function (site) {
       var modalContent = addModal("small"),
           modalHeader = document.createElement("h2"),
@@ -89,7 +94,7 @@
         } else if (site === "turntable.fm") {
           return "Go to the <a href='http://turntable.fm'>homepage</a> and find a room to join. ";
         } else if (site === "last.fm") {
-          return "Go to the <a href='http://last.fm'>homepage</a> and find a station to listen to. "
+          return "Go to the <a href='http://last.fm'>homepage</a> and find a station to listen to. ";
         } else {
           return "Go ";
         }
@@ -117,6 +122,7 @@
       modalContent.appendChild(modalExplanation);
     },
 
+    // directly opens track when only one valid track result is found
     openInSpotify: function (track) {
       musicController.pause();
       window.location = track.href;
@@ -124,6 +130,8 @@
 
   };
 
+  // cleans overlay, modal, and stylesheet off DOM,
+  // resets body and html overflow, resumes music
   var closeModal = function () {
     document.body.removeChild(document.getElementById("add-to-spotify-overlay"));
     document.body.removeChild(document.getElementById("add-to-spotify-modal"));
@@ -133,11 +141,15 @@
     musicController.play();
   };
 
+  // adds stylesheet link, overlay, and modal to DOM. modal includes
+  // close box and content div. returns content div so recipient
+  // functions can add custom content to the modal.
   var addModal = function (type, currentlyPlaying, playButton) {
     var styleSheetLink = document.createElement("link");
     styleSheetLink.type = "text/css";
     styleSheetLink.rel = "stylesheet";
     styleSheetLink.id = "add-to-spotify-stylesheet";
+    // cloudfront url for production, s3 url for testing
     styleSheetLink.href = "http://d39ywk3d3wha95.cloudfront.net/save-to-spotify.css";
     // styleSheetLink.href = "http://save-to-spotify.s3.amazonaws.com/test/save-to-spotify.css";
     document.head.appendChild(styleSheetLink);
@@ -171,7 +183,7 @@
     overlay.style.height = parseInt(window.screen.height + 20, 10) + "px";
     document.body.style.overflow = "hidden";
     document.getElementsByTagName("html")[0].style.overflow = "hidden";
-// 
+
     document.body.insertBefore(overlay, modal);
 
     return modalContent;

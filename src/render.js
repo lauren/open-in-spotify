@@ -4,7 +4,7 @@
     // adds modal to DOM, lists tracks in the modal, and pauses music
     showTrackOptions: function (tracks) {
       var modal = addModal("large"),
-          modalContent = modal.lastElementChild;
+          modalContent = modal.lastElementChild,
           modalHeader = document.createElement("h2"),
           trackList = document.createElement("ul");
 
@@ -30,7 +30,7 @@
     // adds modal to DOM, lists artists in the modal, and pauses music
     showArtistOptions: function (artists) {
       var modal = addModal("large"),
-          modalContent = modal.lastElementChild;
+          modalContent = modal.lastElementChild,
           modalHeader = document.createElement("h2"),
           modalCaveat = document.createElement("h3"),
           artistList = document.createElement("ul");
@@ -53,7 +53,7 @@
 
     showNotFoundMessage: function (track, artist) {
       var modal = addModal("small"),
-          modalContent = modal.lastElementChild;
+          modalContent = modal.lastElementChild,
           modalHeader = document.createElement("h2"),
           modalExplanation = document.createElement("h3");
 
@@ -70,7 +70,7 @@
 
     showUnsupportedSiteMessage: function () {
       var modal = addModal("small"),
-          modalContent = modal.lastElementChild;
+          modalContent = modal.lastElementChild,
           modalHeader = document.createElement("h2"),
           modalExplanation = document.createElement("h3");
 
@@ -90,7 +90,7 @@
     // provides instructions to find music.
     showWrongPageMessage: function (site) {
       var modal = addModal("small"),
-          modalContent = modal.lastElementChild;
+          modalContent = modal.lastElementChild,
           modalHeader = document.createElement("h2"),
           modalExplanation = document.createElement("h3");
 
@@ -121,7 +121,7 @@
 
     showError: function (event) {
       var modal = addModal("small"),
-          modalContent = modal.lastElementChild;
+          modalContent = modal.lastElementChild,
           modalHeader = document.createElement("h2"),
           modalExplanation = document.createElement("h3");
 

@@ -3,7 +3,8 @@
   var render = {
     // adds modal to DOM, lists tracks in the modal, and pauses music
     showTrackOptions: function (tracks) {
-      var modalContent = addModal("large"),
+      var modal = addModal("large"),
+          modalContent = modal.lastElementChild;
           modalHeader = document.createElement("h2"),
           trackList = document.createElement("ul");
 
@@ -23,11 +24,13 @@
       });
       modalContent.appendChild(trackList);
       musicController.pause();
+      modal.className += " visible";
     },
 
     // adds modal to DOM, lists artists in the modal, and pauses music
     showArtistOptions: function (artists) {
-      var modalContent = addModal("large"),
+      var modal = addModal("large"),
+          modalContent = modal.lastElementChild;
           modalHeader = document.createElement("h2"),
           modalCaveat = document.createElement("h3"),
           artistList = document.createElement("ul");
@@ -45,10 +48,12 @@
       });
       modalContent.appendChild(artistList);
       musicController.pause();
+      modal.className += " visible";
     },
 
     showNotFoundMessage: function (track, artist) {
-      var modalContent = addModal("small"),
+      var modal = addModal("small"),
+          modalContent = modal.lastElementChild;
           modalHeader = document.createElement("h2"),
           modalExplanation = document.createElement("h3");
 
@@ -60,10 +65,12 @@
         + "' on Spotify.</p><p>Try again with the next song you like.</p>";
       modalContent.appendChild(modalExplanation);
       musicController.pause();
+      modal.className += " visible";
     },
 
     showUnsupportedSiteMessage: function () {
-      var modalContent = addModal("small"),
+      var modal = addModal("small"),
+          modalContent = modal.lastElementChild;
           modalHeader = document.createElement("h2"),
           modalExplanation = document.createElement("h3");
 
@@ -75,13 +82,15 @@
         + "<p>Try adding a song from <a href='http://songza.com'>Songza</a> or "
         + "<a href='http://last.fm'>Last.fm</a>.</p>";
       modalContent.appendChild(modalExplanation);
+      modal.className += " visible";
     },
 
     // message informing user she's on a supported site but not
     // on a page with music. custom message depending on site
     // provides instructions to find music.
     showWrongPageMessage: function (site) {
-      var modalContent = addModal("small"),
+      var modal = addModal("small"),
+          modalContent = modal.lastElementChild;
           modalHeader = document.createElement("h2"),
           modalExplanation = document.createElement("h3");
 
@@ -107,10 +116,12 @@
         + "<p>" + findPlaylistsAt() + "Then you'll be able to open songs from "
         + site + " in Spotify.";
       modalContent.appendChild(modalExplanation);
+      modal.className += " visible";
     },
 
     showError: function (event) {
-      var modalContent = addModal("small"),
+      var modal = addModal("small"),
+          modalContent = modal.lastElementChild;
           modalHeader = document.createElement("h2"),
           modalExplanation = document.createElement("h3");
 
@@ -120,6 +131,7 @@
       modalExplanation.innerHTML = "<p>Sorry, I can't connect to Spotify right now.</p>"
         + "<p>Try again with the next song you like.</p>" + event.target.status;
       modalContent.appendChild(modalExplanation);
+      modal.className += " visible";
     },
 
     // directly opens track when only one valid track result is found
@@ -133,25 +145,29 @@
   // cleans overlay, modal, and stylesheet off DOM,
   // resets body and html overflow, resumes music
   var closeModal = function () {
-    document.body.removeChild(document.getElementById("add-to-spotify-overlay"));
-    document.body.removeChild(document.getElementById("add-to-spotify-modal"));
-    document.head.removeChild(document.getElementById("add-to-spotify-stylesheet"));
-    document.body.style.overflow = "auto";
-    document.getElementsByTagName("html")[0].style.overflow = "auto";
-    musicController.play();
+    document.getElementById("add-to-spotify-modal").className
+      = document.getElementById("add-to-spotify-modal").className.replace(" visible", "");
+    setTimeout(function () {
+      document.body.removeChild(document.getElementById("add-to-spotify-overlay"));
+      document.body.removeChild(document.getElementById("add-to-spotify-modal"));
+      document.head.removeChild(document.getElementById("add-to-spotify-stylesheet"));
+      document.body.style.overflow = "auto";
+      document.getElementsByTagName("html")[0].style.overflow = "auto";
+      musicController.play();
+    }, 500);
   };
 
   // adds stylesheet link, overlay, and modal to DOM. modal includes
-  // close box and content div. returns content div so recipient
-  // functions can add custom content to the modal.
+  // close box and content div. returns the modal div so recipient
+  // functions can add custom content to the modal and fade it in.
   var addModal = function (type, currentlyPlaying, playButton) {
     var styleSheetLink = document.createElement("link");
     styleSheetLink.type = "text/css";
     styleSheetLink.rel = "stylesheet";
     styleSheetLink.id = "add-to-spotify-stylesheet";
     // cloudfront url for production, s3 url for testing
-    styleSheetLink.href = "http://d39ywk3d3wha95.cloudfront.net/save-to-spotify.css";
-    // styleSheetLink.href = "http://save-to-spotify.s3.amazonaws.com/test/save-to-spotify.css";
+    // styleSheetLink.href = "http://d39ywk3d3wha95.cloudfront.net/save-to-spotify.css";
+    styleSheetLink.href = "http://save-to-spotify.s3.amazonaws.com/test/save-to-spotify.css";
     document.head.appendChild(styleSheetLink);
 
     var firstBodyEl = document.body.firstChild;
@@ -186,7 +202,7 @@
 
     document.body.insertBefore(overlay, modal);
 
-    return modalContent;
+    return modal;
   };
 
   // cross-browser event binder

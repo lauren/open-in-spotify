@@ -18,7 +18,7 @@ module.exports = function(grunt) {
           compress: true
         },
         files: {
-          "open-in-spotify-docs-spotify.css": "open-in-spotify-docs.less"
+          "open-in-spotify-docs.css": "open-in-spotify-docs.less"
         }
       },
       production: {

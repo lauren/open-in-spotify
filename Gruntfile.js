@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     uglify: {
       options: {
-        banner: '/*! Open in Spotify JS v0.0.1 | Copyright 2013 Lauren Sperber https://github.com/lauren/pick-a-color/blob/master/LICENSE | <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+        banner: '/*! Open in Spotify JS v0.0.1 | Copyright 2013 Lauren Sperber https://github.com/lauren/open-in-spotify/blob/master/LICENSE | <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
       build: {
         src: ['src/selectors.js', 'src/music-controller.js', 'src/spotify-querier.js', 'src/render.js', 'src/save-to-spotify.js', 'src/shims.js'],
@@ -49,13 +49,9 @@ module.exports = function(grunt) {
     }
   });
 
-  // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-
-  // Default task(s).
-  grunt.registerTask('default', ['uglify']);
 
 };

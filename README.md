@@ -14,11 +14,7 @@ Discover songs on Songza or last.fm. Open them in Spotify. Play them on repeat. 
 Contributing
 ------------
 
-1. `npm install`
-2. `npm install grunt-contrib-uglify --save-dev`
-3. `npm install grunt-contrib-less --save-dev`
-4. `npm install grunt-contrib-watch --save-dev`
-5. `npm install grunt-contrib-jshint --save-dev`
-6. `grunt watch`
-7. Code!
-8. Run tests with `node node_modules/mocha/bin/mocha`.
+1. `npm install --save-dev`
+2. `grunt watch`
+3. Code!
+4. Run tests with `node node_modules/mocha/bin/mocha`.

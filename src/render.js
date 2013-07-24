@@ -166,8 +166,8 @@
     styleSheetLink.rel = "stylesheet";
     styleSheetLink.id = "add-to-spotify-stylesheet";
     // cloudfront url for production, s3 url for testing
-    styleSheetLink.href = "http://d39ywk3d3wha95.cloudfront.net/save-to-spotify.css";
-    // styleSheetLink.href = "http://save-to-spotify.s3.amazonaws.com/test/save-to-spotify.css";
+    styleSheetLink.href = "http://d39ywk3d3wha95.cloudfront.net/open-in-spotify.css";
+    // styleSheetLink.href = "http://save-to-spotify.s3.amazonaws.com/test/open-in-spotify.css";
     document.head.appendChild(styleSheetLink);
 
     var firstBodyEl = document.body.firstChild;

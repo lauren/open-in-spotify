@@ -5,11 +5,11 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     uglify: {
       options: {
-        banner: '/*! Open in Spotify JS v0.0.1 | Copyright 2013 Lauren Sperber https://github.com/lauren/open-in-spotify/blob/master/LICENSE | <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+        banner: '/*! Open in Spotify JS v<pkg.version> | Copyright 2013 Lauren Sperber https://github.com/lauren/open-in-spotify/blob/master/LICENSE | <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
       build: {
-        src: ['src/selectors.js', 'src/music-controller.js', 'src/spotify-querier.js', 'src/render.js', 'src/save-to-spotify.js', 'src/shims.js'],
-        dest: 'build/open-in-spotify.min.js'
+        src: ['src/selectors.js', 'src/music-controller.js', 'src/spotify-querier.js', 'src/render.js', 'src/<%= pkg.name %>.js', 'src/shims.js'],
+        dest: 'build/<%= pkg.name %>.min.js'
       }
     },
     less: {
@@ -18,7 +18,7 @@ module.exports = function(grunt) {
           compress: true
         },
         files: {
-          "build/save-to-spotify.css": "src/save-to-spotify.less"
+          "build/<%= pkg.name %>.css": "src/<%= pkg.name %>.less"
         }
       },
       production: {
@@ -26,7 +26,7 @@ module.exports = function(grunt) {
           compress: true
         },
         files: {
-          "build/save-to-spotify.css": "src/save-to-spotify.less"
+          "build/<%= pkg.name %>.css": "src/s<%= pkg.name %>.less"
         }
       }
     },

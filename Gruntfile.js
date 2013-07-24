@@ -13,14 +13,6 @@ module.exports = function(grunt) {
       }
     },
     less: {
-      development: {
-        options: {
-          compress: true
-        },
-        files: {
-          "build/<%= pkg.name %>.css": "src/<%= pkg.name %>.less"
-        }
-      },
       production: {
         options: {
           compress: true

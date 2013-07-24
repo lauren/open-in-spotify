@@ -5,34 +5,26 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     uglify: {
       options: {
-        banner: '/*! Open in Spotify JS v0.0.1 | Copyright 2013 Lauren Sperber https://github.com/lauren/open-in-spotify/blob/master/LICENSE | <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+        banner: '/*! Open in Spotify Docs JS v<%= pkg.version %> | Copyright 2013 Lauren Sperber https://github.com/lauren/open-in-spotify/blob/master/LICENSE | <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
       build: {
-        src: ['open-in-spotify-docs.js'],
-        dest: 'open-in-spotify-docs.min.js'
+        src: ['<%= pkg.name %>.js'],
+        dest: '<%= pkg.name %>.min.js'
       }
     },
     less: {
-      development: {
-        options: {
-          compress: true
-        },
-        files: {
-          "open-in-spotify-docs.css": "open-in-spotify-docs.less"
-        }
-      },
       production: {
         options: {
           compress: true
         },
         files: {
-          "open-in-spotify-docs.css": "open-in-spotify-docs.less"
+          "<%= pkg.name %>.css": "<%= pkg.name %>.less"
         }
       }
     },
     watch: {
       js: {
-        files: ['open-in-spotify-docs.js'],
+        files: ['<%= pkg.name %>.js'],
         tasks: ['jshint', 'uglify'],
       },
       less: {
@@ -41,7 +33,7 @@ module.exports = function(grunt) {
       }
     },
     jshint: {
-      all: ['Gruntfile.js', 'open-in-spotify-docs.js'],
+      all: ['Gruntfile.js', '<%= pkg.name %>.js'],
       options: {
         laxbreak: true,
         force: true

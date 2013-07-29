@@ -18,7 +18,7 @@ module.exports = function(grunt) {
           compress: true
         },
         files: {
-          "build/<%= pkg.name %>.css": "src/s<%= pkg.name %>.less"
+          "build/<%= pkg.name %>.css": "src/<%= pkg.name %>.less"
         }
       }
     },
